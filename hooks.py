@@ -7,9 +7,10 @@ class WhatToDo:
 	listeners = []
 	capturer = None
 
-	#Function to execute if empty()
+	#Function to execute if there's no capturer
 	def fallback(self):
-		pass
+		#If we have nothing to do then trigger the event back (to the system)
+		self.event.trigger()
 
 	def __init__	
 	
@@ -24,12 +25,12 @@ class WhatToDo:
 		return self.listeners == [] and self.capturer == None
 
 	def execute(self):
-		if self.empty():
-			self.fallback()
 		for l in self.listeners:
 			l()
 		if(self.capturer != None):
 			self.capturer()
+		else:
+			self.fallback()
 
 MAP = key_dependent_dict(lambda event: WhatToDo(event))
 
