@@ -31,10 +31,10 @@ except IOError:
 	print("IOError when grabbing device")
 	exit(1)
 try:
-	while True:
+	for i in range(100):
 		select([device], [], [])
 		for event in device.read():
 			if event.type == ecodes.EV_KEY:
-				print(event)
+				print(event.code,event.type)
 finally:
 	device.ungrab()
