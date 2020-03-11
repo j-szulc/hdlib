@@ -1,55 +1,55 @@
-#from helpers import key_dependent_dict
 #from events import PKeyEvent, PComboEvent
-from helpers import *
 from events import *
+from collections import defaultdict
 
 class WhatToDo:
-	
-	event = None
 
 	listeners = []
 	capturer = None
 
 	#Function to execute if there's no capturer
-	def fallback(self):
-		#If we have nothing to do then trigger the event back (to the system)
+	def fallback(self, event):
+		#If we have nothing to capture then trigger the event back (to the system)
 		if(type(self.event) == PKeyEvent):		
-			#self.event.trigger()
+			self.event.trigger()
 			pass
 
-	def __init__(self, event):
-		self.event = event	
-	
 	def listen(self, func):
+		#Stop adding listeners when there's a capturer
 		if(self.capturer == None):
 			self.listeners.append(func)
 
 	def capture(self, func):
 		self.capturer = func
-	
-	def empty():
-		return self.listeners == [] and self.capturer == None
 
-	def execute(self):
+	def execute(self, event):
 		for l in self.listeners:
-			l()
+			l(event)
 		if(self.capturer != None):
-			self.capturer()
+			self.capturer(event)
 		else:
-			self.fallback()
+			self.fallback(event)
 
-MAP = key_dependent_dict(lambda event: WhatToDo(event))
+class Map:
+
+	d = defaultdict(lambda: WhatToDo())
+
+	def captureEvent(self,event):
+		def decorator(func):
+			self.d[event].capture(func)
+		return decorator
+
+	def listenEvent(self,event):
+		def decorator(func):
+			self.d[event].capture(func)
+		return decorator
+	
+	def execute(self, event):
+		d[event].execute(event)
+
+MAP = Map()
 
 
-def captureEvent(event):
-	def decorator(func):
-		global MAP
-		MAP[event].capture(func)
-	return decorator
+#from keys import *
+#(listenEvent(PKeyEvent(nameToPKey["a"],Action.PRESS))(print)
 
-def listenEvent(event):
-	def decorator(func):
-		global MAP
-		MAP[event].listen(func)
-	return decorator
-			

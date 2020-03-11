@@ -20,7 +20,7 @@ except IOError:
 	print("IOError when grabbing device")
 	exit(1)
 try:
-	for i in range(1000):
+	for i in range(100):
 		select([device], [], [])
 		for event in device.read():
 			if event.type == ecodes.EV_KEY:
@@ -36,9 +36,11 @@ try:
 				
 				pkeyevent = PKeyEvent(pkey, action)				
 				pcomboevent = PComboEvent(pcombo, action)
-					
-				for e in [pkeyevent, pcomboevent]:
-					MAP[e].execute()
+				
+				WhatToDo(pkeyevent).fallback()
+				print(type(pkeyevent)==PKeyEvent)
+				#for e in [pkeyevent, pcomboevent]:
+				#	MAP[e].execute()
 
 finally:
 	device.ungrab()
