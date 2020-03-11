@@ -24,8 +24,10 @@ try:
 		select([device], [], [])
 		for event in device.read():
 			if event.type == ecodes.EV_KEY:
+				if event.code not in codeToPKey:
+					continue
 				print(event.code,event.type)
-				action = Action[event.type]
+				action = Action(int(event.type))
 				pkey = codeToPKey[event.code]
 				pcombo = PCombo(pkey, currentModifiers)
 				
