@@ -9,8 +9,9 @@ allModifiers = {nameToKey[name] for name in allModifiersNames}
 currentModifiers = frozenset()
 
 def updateModifiers(event):
-	key = event.pcombo.key
+	key = event.key
 	action = event.action
+
 	if(key in allModifiers):
 		if(action == Action.PRESS):
 			currentModifiers |= frozenset({key})	
