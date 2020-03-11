@@ -8,6 +8,8 @@ from events import Action
 
 class Key:
 
+	name = ""
+
 	# e.g. nameToVKey["shift"].expand() == [nameToPKey["lshift"], nameToPKey["rshift"]]
 	def expand(self):
 		class InvalidKeyType(Exception):
@@ -26,7 +28,6 @@ class Key:
 
 class PKey(Key):
 	
-	name = ""
 	code = -1
 
 	def __init__(self, tuple_):
@@ -52,7 +53,6 @@ nameToPKey = { tuple_[0]: pkeys[i] for (i,tuple_) in enumerate(pkeytuples) }
 
 class VKey(Key):
 	
-	name = ""
 	keyset = frozenset()	
 	
 	def __init__(self, tuple_):
