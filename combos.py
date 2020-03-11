@@ -28,8 +28,9 @@ class Combo:
 		modifiersVariants= product([ m.expand() for m in self.modifiers ])
 
 		return [Combo(k,m) for k in self.key.expand() for m in modifiersVariants]
+
 #
-# COMBO
+# PHYSICAL COMBO
 #
 
 class PCombo(Combo):
