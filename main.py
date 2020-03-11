@@ -20,20 +20,23 @@ except IOError:
 	print("IOError when grabbing device")
 	exit(1)
 try:
-	for i in range(100):
+	for i in range(1000):
 		select([device], [], [])
 		for event in device.read():
 			if event.type == ecodes.EV_KEY:
+				
 				if event.code not in codeToPKey:
 					continue
-				print(event.code,event.type)
-				action = Action(int(event.type))
+	
+				print(event.code,event.value)
+
+				action = Action(int(event.value))
 				pkey = codeToPKey[event.code]
 				pcombo = PCombo(pkey, currentModifiers)
 				
 				pkeyevent = PKeyEvent(pkey, action)				
 				pcomboevent = PComboEvent(pcombo, action)
-
+					
 				for e in [pkeyevent, pcomboevent]:
 					MAP[e].execute()
 
