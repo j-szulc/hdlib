@@ -10,7 +10,7 @@ class Action(IntEnum):
 	REPEAT = 2
 
 # Event occuring when pressing key regardless of modifiers
-class PKeyEvent():
+class PKeyEvent:
 
 	key = None
 	action = None
@@ -23,7 +23,7 @@ class PKeyEvent():
 		self.pkey.trigger(self.action)
 
 # Event occuring when pressing exact pcombo
-class PComboEvent():
+class PComboEvent:
 
 	combo = None
 	action = None
