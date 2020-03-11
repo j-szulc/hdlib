@@ -3,9 +3,6 @@
 from keys import *
 from events import *
 
-allModifiersNames = {"lshift","rshift"}
-allModifiers = {nameToKey[name] for name in allModifiersNames}
-
 class ModifierSet:
 
 	tracked = None
@@ -14,7 +11,7 @@ class ModifierSet:
 	def __init__(self, allModifiers):
 		tracked = { PKey.fromSth(m) for m in allModifiers }
 
-	def update(event):
+	def update(self,event):
 		key = event.key
 		action = event.action
 
@@ -22,4 +19,4 @@ class ModifierSet:
 			if(action == Action.PRESS):
 				current |= frozenset({key})	
 			elif(action == Action.RELEASE):
-				current -= frozenset({key})
+				current -= frozenset({key2})
