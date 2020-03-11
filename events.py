@@ -1,5 +1,7 @@
 from enum import IntEnum
 from output import trigger
+from keys import Key
+from combos import Combo
 
 class Action(IntEnum):
 	
@@ -7,7 +9,21 @@ class Action(IntEnum):
 	PRESS = 1
 	REPEAT = 2
 
-class Event:
+# Event occuring when pressing key regardless of modifiers
+class PKeyEvent():
+
+	key = None
+	action = None
+	
+	def __init__(self, key, action):
+		self.key = key
+		self.action = action
+
+	def trigger(self):
+		self.pkey.trigger(self.action)
+
+# Event occuring when pressing exact pcombo
+class PComboEvent():
 
 	combo = None
 	action = None
@@ -17,4 +33,5 @@ class Event:
 		self.action = action
 
 	def trigger(self):
-		pass
+		self.key.trigger(self.action)
+
