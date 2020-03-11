@@ -13,7 +13,7 @@ from modifiers import *
 from hooks import *
 
 def f(e):
-	print(e)
+	print(len(MAP.d))
 	print("Testing")
 
 (MAP.captureEvent(KeyEvent("a","PRESS")))(f)
@@ -34,7 +34,7 @@ try:
 				if event.code not in codeToPKey:
 					continue
 	
-				print(event.code,event.value)
+				#print(event.code,event.value)
 
 				action = Action.fromSth(event.value)
 				pkey = Key.fromSth(event.code)
