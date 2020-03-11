@@ -13,7 +13,7 @@ from modifiers import *
 from hooks import *
 
 def f(e):
-	print(len(MAP.d))
+	print(len(MAP.dict))
 	print("Testing")
 
 (MAP.listenEvent(KeyEvent("a","PRESS")))(f)

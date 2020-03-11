@@ -35,24 +35,16 @@ class WhatToDo:
 
 class Map:
 
-	d = defaultdict(lambda: WhatToDo())
+	dict = defaultdict(lambda: WhatToDo())
 
 	def listenEvent(self,event,suppress = False):
 		def decorator(func):
 			for pevent in event.expand():
-				self.d[pevent].listen(func, suppress)
+				self.dict[pevent].listen(func, suppress)
 		return decorator
 	
 	def execute(self, pevent):
-		print(pevent)
-		print(type(pevent))
-		print(hash(pevent))
-		print(len(MAP.d))
-		try:
-			print(hash(pevent.key))
-		except AttributeError:
-			pass
-		self.d[pevent].execute(pevent)
+		self.1dict[pevent].execute(pevent)
 
 MAP = Map()
 

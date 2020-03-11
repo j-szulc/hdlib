@@ -48,8 +48,8 @@ class Combo:
 			m.trigger(action)
 		self.key.trigger(action)
 
-	def isP(self):
-		return isinstance(key,PKey) and all( isinstance(m,Pkey) for m in self.modifiers )
+	def isPhysical(self):
+		return self.key.isPhysical() and all( m.isPhysical() for m in self.modifiers )
 	
 	def __repr__(self):
 		return str(self)

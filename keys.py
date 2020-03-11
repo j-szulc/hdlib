@@ -62,6 +62,9 @@ class Key:
 
 	def __str__(self):
 		return self.name
+
+	def isPhysical(self):
+		return isinstance(self,PKey)
 #
 # PHYSICAL KEYS
 #
