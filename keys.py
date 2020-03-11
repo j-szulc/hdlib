@@ -57,6 +57,11 @@ class Key:
 		else:
 			raise InvalidSth(sth)
 
+	def __repr__(self):
+		return str(self)
+
+	def __str__(self):
+		return self.name
 #
 # PHYSICAL KEYS
 #

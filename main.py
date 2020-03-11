@@ -16,7 +16,7 @@ def f(e):
 	print(len(MAP.d))
 	print("Testing")
 
-(MAP.captureEvent(KeyEvent("a","PRESS")))(f)
+(MAP.listenEvent(KeyEvent("a","PRESS")))(f)
 
 #exit()
 

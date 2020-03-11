@@ -22,6 +22,7 @@ class Action(IntEnum):
 		else:
 			raise InvalidSth(sth)
 		
+		
 
 # Event occuring when pressing key regardless of modifiers
 class KeyEvent:
@@ -52,6 +53,12 @@ class KeyEvent:
 	def __eq__(self,obj):
 		return isinstance(obj,KeyEvent) and (self.key, self.action) == (obj.key, obj.action)
 
+	def __str__(self):
+		return str(self.key) + " " + str(self.action)
+
+	def __repr__(self):
+		return str(self)
+
 # The same as KeyEvent but only allows physical keys
 class PKeyEvent(KeyEvent):
 	pass
@@ -70,7 +77,7 @@ class ComboEvent:
 		if combo.isP():
 			return [self]
 		else:
-			return sum_([ComboEvent[c,action].expand() for c in combo.expand()], start = [])
+			return sum_([ComboEvent[c,action].expand() for c in self.combo.expand()], start = [])
 	# do not trigger it back to the system 
 	# any key pressed will invoke both PKeyEvent, PComboEvent
 	# and PKeyEvent will trigger it back
@@ -86,6 +93,11 @@ class ComboEvent:
 	def __eq__(self,obj):
 		return isinstance(obj,ComboEvent) and (self.combo, self.action) == (obj.combo, obj.action)
 
+	def __str__(self):
+		return str(self.combo) + " " + str(self.action)
+
+	def __repr__(self):
+		return str(self)
 
 # The same as ComboEvent but only allows physical keys
 class PComboEvent(KeyEvent):

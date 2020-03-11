@@ -30,7 +30,7 @@ class WhatToDo:
 	def execute(self, event):
 		for l in self.listeners:
 			l(event)
-		if not self.suppress
+		if not self.suppress:
 			self.fallback(event)
 
 class Map:
@@ -44,12 +44,20 @@ class Map:
 		return decorator
 	
 	def execute(self, pevent):
+		print(pevent)
+		print(type(pevent))
+		print(hash(pevent))
+		print(len(MAP.d))
+		try:
+			print(hash(pevent.key))
+		except AttributeError:
+			pass
 		self.d[pevent].execute(pevent)
 
 MAP = Map()
 
-def listenKey(key, suppressaction = Action.PRESS):
-	return Map.captureEvent(KeyEvent(
+#def listenKey(key, suppressaction = Action.PRESS):
+#	return Map.captureEvent(KeyEvent(
 
 #from keys import *
 #(listenEvent(PKeyEvent(nameToPKey["a"],Action.PRESS))(print)

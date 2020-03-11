@@ -16,13 +16,13 @@ def sum_(list_, start=0):
 def product(list_of_lists):
 	return list(itertools_product(*list_of_lists))
 
-
-class key_dependent_dict(defaultdict):
-
-	def __init__(self,f_of_x):
-		super().__init__(None) # base class doesn't get a factory
-		self.f_of_x = f_of_x # save f(x)
-	def __missing__(self, key): # called when a default needed
-		ret = self.f_of_x(key) # calculate default value
-		self[key] = ret # and install it in the dict
-		return ret
+# UNUSED
+#class key_dependent_dict(defaultdict):
+#
+#	def __init__(self,f_of_x):
+#		super().__init__(None) # base class doesn't get a factory
+#		self.f_of_x = f_of_x # save f(x)
+#	def __missing__(self, key): # called when a default needed
+#		ret = self.f_of_x(key) # calculate default value
+#		self[key] = ret # and install it in the dict
+#		return ret

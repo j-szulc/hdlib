@@ -49,7 +49,17 @@ class Combo:
 		self.key.trigger(action)
 
 	def isP(self):
-		return isinstance(key,PKey) and all( isinstance(m,Pkey) for m in modifiers )
+		return isinstance(key,PKey) and all( isinstance(m,Pkey) for m in self.modifiers )
 	
-	
+	def __repr__(self):
+		return str(self)
+
+	def __str__(self):
+		return sum_([repr(m)+"-" for m in self.modifiers], start="") + repr(self.key)
+
+	def __hash__(self):
+		return hash((self.key,self.modifiers))
+
+	def __eq__(self,obj):
+		return isinstance(obj,Combo) and (self.key,self.modifiers) == (obj.key, obj.modifiers)
 		
