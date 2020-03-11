@@ -1,17 +1,12 @@
 #!/usr/bin/python3 -i
 
-#from events import Action, PKeyEvent, PComboEvent
-#from keys import codeToPKey
-#from combos import PCombo
-#from modifiers import currentModifiers, updateModifiers
-#from hooks import MAP
-from output import *
-from events import *
-from keys import * 
-from combos import *
-from modifiers import *
+from ioio.output import *
+from structs.events import *
+from structs.keys import * 
+from structs.combos import *
+from structs.modifiers import *
 from hooks import *
-from input import *
+from ioio.input import *
 
 MAP = Map()
 
