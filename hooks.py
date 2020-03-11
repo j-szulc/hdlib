@@ -1,5 +1,7 @@
 #from helpers import key_dependent_dict
+#from events import PKeyEvent, PComboEvent
 from helpers import *
+from events import *
 
 class WhatToDo:
 	
@@ -11,7 +13,9 @@ class WhatToDo:
 	#Function to execute if there's no capturer
 	def fallback(self):
 		#If we have nothing to do then trigger the event back (to the system)
-		self.event.trigger()
+		if(type(self.event) == PKeyEvent):		
+			#self.event.trigger()
+			pass
 
 	def __init__(self, event):
 		self.event = event	
