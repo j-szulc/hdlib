@@ -46,6 +46,7 @@ pkeytuples = [
 
 pkeys = [ PKey(tuple_) for tuple_ in pkeytuples ]
 nameToPKey = { tuple_[0]: pkeys[i] for (i,tuple_) in enumerate(pkeytuples) }
+codeToPKey = { tuple_[1]: pkeys[i] for (i,tuple_) in enumerate(pkeytuples) }
 
 #
 # VIRTUAL KEYS
@@ -68,7 +69,7 @@ vkeys = [ VKey(tuple_) for tuple_ in vkeytuples ]
 nameToVKey = { tuple_[0]: vkeys[i] for (i,tuple_) in enumerate(vkeytuples) }
 
 #
-# ALL KEYS
+# Key format conversion dictionaries
 #
 
 nameToKey = { **nameToPKey, **nameToVKey }
