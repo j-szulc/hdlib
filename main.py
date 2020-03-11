@@ -37,10 +37,9 @@ try:
 				pkeyevent = PKeyEvent(pkey, action)				
 				pcomboevent = PComboEvent(pcombo, action)
 				
-				WhatToDo(pkeyevent).fallback()
-				print(type(pkeyevent)==PKeyEvent)
-				#for e in [pkeyevent, pcomboevent]:
-				#	MAP[e].execute()
+				for e in [pkeyevent, pcomboevent]:
+					print(e.passthrough)
+					MAP.execute(e)
 
 finally:
 	device.ungrab()

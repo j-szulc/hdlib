@@ -18,6 +18,10 @@ class PKeyEvent:
 	key = None
 	action = None
 	
+	# pass the event back to the system if there's nothing to capture it
+	# i.e. trigger it back to the system	
+	passthrough = True
+
 	def __init__(self, key, action):
 		self.key = key
 		self.action = action
@@ -31,6 +35,12 @@ class PComboEvent:
 	combo = None
 	action = None
 	
+	# do not trigger it back to the system 
+	# any key pressed will invoke both PKeyEvent, PComboEvent
+	# and PKeyEvent will trigger it back
+	# setting it to true will double every character typed
+	passthrough = False
+
 	def __init__(self, combo, action):
 		self.combo = combo
 		self.action = action

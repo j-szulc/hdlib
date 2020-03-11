@@ -9,9 +9,13 @@ class WhatToDo:
 
 	#Function to execute if there's no capturer
 	def fallback(self, event):
-		#If we have nothing to capture then trigger the event back (to the system)
-		if(type(self.event) == PKeyEvent):		
-			self.event.trigger()
+		# If we have nothing to capture then pass it through to the system
+		# (trigger the event back)
+		try:
+			if event.passthrough:		
+				event.trigger()
+		except AttributeError:
+			# do nothing by default
 			pass
 
 	def listen(self, func):
@@ -45,7 +49,7 @@ class Map:
 		return decorator
 	
 	def execute(self, event):
-		d[event].execute(event)
+		self.d[event].execute(event)
 
 MAP = Map()
 
