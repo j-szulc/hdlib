@@ -19,7 +19,7 @@ class WhatToDo:
 		# (trigger the event back)
 		try:
 			if (not self.suppress) and event.passthrough:		
-				event.trigger()
+				event.send()
 		except AttributeError:
 			# do nothing by default
 			pass
@@ -47,26 +47,26 @@ class Map:
 				print(pevent)
 				self.dict_[pevent].listen(func, suppress)
 		return decorator
+
+	def listenKey(self,key,action = Action.PRESS, suppress = False):
+		return self.listenEvent(KeyEvent(key,action),suppress)
+
+	def listenCombo(self,combo,action = Action.PRESS, suppress = False):
+		return self.listenEvent(ComboEvent(combo,action),suppress)
+
+	def captureKey(self,key,action = Action.PRESS):
+		return self.listenKey(key,action,suppress=True)
+
+	def captureCombo(self,combo,action = Action.PRESS):
+		return self.listenCombo(combo,action,suppress=True)
 	
 	def execute(self, pevent):
 		self.dict_[pevent].execute(pevent)
 
 MAP = Map()
 
-def listenKey(key,action = Action.PRESS, suppress = False):
-	return MAP.listenEvent(KeyEvent(key,action),suppress)
-
-def listenCombo(combo,action = Action.PRESS, suppress = False):
-	return MAP.listenEvent(ComboEvent(combo,action),suppress)
-
-def captureKey(key,action = Action.PRESS):
-	return listenKey(key,action,True)
-
-def captureCombo(combo,action = Action.PRESS):
-	return listenCombo(combo,action,True)
-
-listen = listenCombo
-capture = captureCombo
+listen = MAP.listenCombo
+capture = MAP.captureCombo
 
 #def listenKey(key, suppressaction = Action.PRESS):
 #	return Map.captureEvent(KeyEvent(
