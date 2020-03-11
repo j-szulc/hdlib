@@ -25,7 +25,6 @@ class WhatToDo:
 			pass
 
 	def listen(self, func, suppress = False):
-		print("I'm listening")
 		#Stop adding listeners when supressing
 		if not self.suppress:
 			self.listeners.append(func)
