@@ -13,7 +13,8 @@ class WhatToDo:
 		#If we have nothing to do then trigger the event back (to the system)
 		self.event.trigger()
 
-	def __init__	
+	def __init__(self, event):
+		self.event = event	
 	
 	def listen(self, func):
 		if(self.capturer == None):
