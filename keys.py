@@ -4,9 +4,10 @@
 from helpers import *
 from output import *
 from events import *
+from errors import *
 
 #
-# ALL KEYS
+# CLASS DEFINITIONS
 #
 
 class Key:
@@ -15,15 +16,22 @@ class Key:
 
 	# e.g. nameToVKey["shift"].expand() == [nameToPKey["lshift"], nameToPKey["rshift"]]
 	def expand(self):
-		class InvalidKeyType(Exception):
-			pass
+	
 		
 		if(type(self) == PKey):
 			return [self]
 		elif(type(self) == VKey):
 			return sum_([subkey.expand() for subkey in self.keyset], start=[])
 		else:
-			raise InvalidKeyType
+			raise InvalidKeyType(type(self))
+
+	@staticmethod
+	def fromStr(str_):
+		global nameToKey
+		if str_ in nameToKey:
+			nameToKey[str_]
+		else:
+			raise InvalidKeyStr(str_)
 
 #
 # PHYSICAL KEYS
@@ -37,9 +45,17 @@ class PKey(Key):
 		name, code = tuple_
 		self.name = name
 		self.code = code
-	
+
 	def trigger(self, action):
 		trigger(self.code, int(action))
+
+	@staticmethod
+	def fromStr(str_):
+		global nameToPKey
+		if str_ in nameToPKey:
+			nameToPKey[str_]
+		else:
+			raise InvalidKeyStr(str_)
 
 pkeytuples = [
 	("a", 30),
@@ -64,8 +80,16 @@ class VKey(Key):
 		self.name = name
 		self.keyset = frozenset(keyset)
 
+	@staticmethod
+	def fromStr(str_):
+		global nameToVKey
+		if str_ in nameToVKey:
+			nameToVKey[str_]
+		else:
+			raise InvalidKeyStr(str_)
+
 vkeytuples = [
-	("shift", {nameToPKey["lshift"], nameToPKey["rshift"]})
+	("shift", {PKey.fromStr("lshift"), PKey.fromStr("rshift")})
 ]
 
 vkeys = [ VKey(tuple_) for tuple_ in vkeytuples ]

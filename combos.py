@@ -17,7 +17,7 @@ class Combo:
 		self.modifiers = frozenset(modifiers)	
 	
 	# e.g. Combo.fromString("ctrl-c")
-	#@static
+	@staticmethod
 	def fromStr(str_):
 		splitted = str_.split("-")
 		global nameToKey
