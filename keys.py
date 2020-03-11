@@ -57,14 +57,12 @@ class Key:
 		else:
 			raise InvalidSth(sth)
 
-	def __repr__(self):
-		return str(self)
-
-	def __str__(self):
-		return self.name
-
 	def isPhysical(self):
 		return isinstance(self,PKey)
+
+	def __str__(self):
+		return name
+
 #
 # PHYSICAL KEYS
 #
@@ -78,8 +76,13 @@ class PKey(Key):
 		self.name = name
 		self.code = code
 
-	def trigger(self, action):
-		trigger(self.code, int(action))
+	def send(self, action):
+		send(self.code, int(action))
+
+
+	def __repr__(self):
+		return "P"+name+":"+str(code)	
+		
 
 pkeytuples = [
 	("a", 30),
@@ -103,6 +106,9 @@ class VKey(Key):
 		name, keyset = tuple_
 		self.name = name
 		self.keyset = frozenset(keyset)
+
+	def __repr__(self):
+		return "V"+self.name+":"+sum_([repr(k) for k in self.keyset],start="")
 
 vkeytuples = [
 	("shift", {PKey.fromStr("lshift"), PKey.fromStr("rshift")})
