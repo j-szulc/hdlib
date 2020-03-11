@@ -3,7 +3,7 @@
 #from events import Action
 from helpers import *
 from output import *
-from events import *
+from actions import *
 from errors import *
 
 #
@@ -61,11 +61,7 @@ class Key:
 		return isinstance(self,PKey)
 
 	def __str__(self):
-		return name
-
-#
-# PHYSICAL KEYS
-#
+		return self.name
 
 class PKey(Key):
 	
@@ -81,22 +77,7 @@ class PKey(Key):
 
 
 	def __repr__(self):
-		return "P"+name+":"+str(code)	
-		
-
-pkeytuples = [
-	("a", 30),
-	("lshift", 42),
-	("rshift", 54)
-]
-
-pkeys = [ PKey(tuple_) for tuple_ in pkeytuples ]
-nameToPKey = { tuple_[0]: pkeys[i] for (i,tuple_) in enumerate(pkeytuples) }
-codeToPKey = { tuple_[1]: pkeys[i] for (i,tuple_) in enumerate(pkeytuples) }
-
-#
-# VIRTUAL KEYS
-#
+		return "P"+self.name+":"+str(self.code)	
 
 class VKey(Key):
 	
@@ -110,6 +91,29 @@ class VKey(Key):
 	def __repr__(self):
 		return "V"+self.name+":"+sum_([repr(k) for k in self.keyset],start="")
 
+
+#
+# GENERATE PHYSICAL KEYS
+#
+
+	
+
+pkeytuples = [
+	("a", 30),
+	("lshift", 42),
+	("rshift", 54)
+]
+
+pkeys = [ PKey(tuple_) for tuple_ in pkeytuples ]
+nameToPKey = { tuple_[0]: pkeys[i] for (i,tuple_) in enumerate(pkeytuples) }
+codeToPKey = { tuple_[1]: pkeys[i] for (i,tuple_) in enumerate(pkeytuples) }
+
+
+#
+# GENERATE VIRTUAL KEYS
+#
+
+
 vkeytuples = [
 	("shift", {PKey.fromStr("lshift"), PKey.fromStr("rshift")})
 ]
@@ -118,11 +122,14 @@ vkeys = [ VKey(tuple_) for tuple_ in vkeytuples ]
 nameToVKey = { tuple_[0]: vkeys[i] for (i,tuple_) in enumerate(vkeytuples) }
 
 #
-# Key format conversion dictionaries
+# TOOLS
 #
 
 nameToKey = { **nameToPKey, **nameToVKey }
 
+def sendall(action):
+	for pkey in pkeys:
+		pkey.send(action)
 
 
 
