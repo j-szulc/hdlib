@@ -43,10 +43,10 @@ class Combo:
 
 			return sum_([Combo(k,m).expand() for k in self.key.expand() for m in modifiersVariants],start=[])
 	
-	def trigger(self, action):		
+	def send(self, action):		
 		for m in self.modifiers:
-			m.trigger(action)
-		self.key.trigger(action)
+			m.send(action)
+		self.key.send(action)
 
 	def isPhysical(self):
 		return self.key.isPhysical() and all( m.isPhysical() for m in self.modifiers )

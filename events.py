@@ -42,8 +42,8 @@ class KeyEvent:
 	# i.e. trigger it back to the system	
 	passthrough = True
 
-	def trigger(self):
-		self.key.trigger(self.action)
+	def send(self):
+		self.key.send(self.action)
 
 	def __hash__(self):
 		return hash((self.key,self.action))
@@ -86,8 +86,8 @@ class ComboEvent:
 	# setting it to true will double every character typed
 	passthrough = False
 
-	def trigger(self):
-		self.combo.trigger(self.action)
+	def send(self):
+		self.combo.send(self.action)
 
 	def __hash__(self):
 		return hash((self.combo,self.action))
