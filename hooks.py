@@ -1,5 +1,5 @@
 #from events import PKeyEvent, PComboEvent
-from structs.events import *
+from events import *
 from collections import defaultdict
 
 class WhatToDo:
