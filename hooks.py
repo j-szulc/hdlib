@@ -63,14 +63,4 @@ class Map:
 	def execute(self, pevent):
 		self.dict_[pevent].execute(pevent)
 
-MAP = Map()
-
-listen = MAP.listenCombo
-capture = MAP.captureCombo
-
-#def listenKey(key, suppressaction = Action.PRESS):
-#	return Map.captureEvent(KeyEvent(
-
-#from keys import *
-#(listenEvent(PKeyEvent(nameToPKey["a"],Action.PRESS))(print)
 

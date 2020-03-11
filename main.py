@@ -13,40 +13,23 @@ from modifiers import *
 from hooks import *
 from input import *
 
+MAP = Map()
+
+listen = MAP.listenCombo
+capture = MAP.captureCombo
+
 @listen("a")
 def f(e):
-	print(len(MAP.dict_))
-	#print("Testing")
+	print("Hello")
 
 
-#exit()
+def handlingFun(pkey, action):
 
-try:
-	device.grab()
-except IOError:
-	print("IOError when grabbing device")
-	exit(1)
-try:
-	for i in range(100):
-		select([device], [], [])
-		for event in device.read():
-			if event.type == ecodes.EV_KEY:
-				
-				if event.code not in codeToPKey:
-					continue
-	
-				#print(event.code,event.value)
+	pcombo = Combo(pkey, currentModifiers)
 
-				action = Action.fromSth(event.value)
-				pkey = Key.fromSth(event.code)
-				pcombo = Combo(pkey, currentModifiers)
-				
-				pkeyevent = KeyEvent(pkey, action)				
-				pcomboevent = ComboEvent(pcombo, action)
-				
-				for e in [pkeyevent, pcomboevent]:
-					#print(e.passthrough)
-					MAP.execute(e)
+	pkeyevent = KeyEvent(pkey, action)				
+	pcomboevent = ComboEvent(pcombo, action)
 
-finally:
-	device.ungrab()
+	for e in [pkeyevent, pcomboevent]:
+		MAP.execute(e)
+
