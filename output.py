@@ -30,7 +30,6 @@ def output_sync():
 	uinput.syn()
 
 def send(key, action):
-	#select([], [device], [])
 	uinput.write(ecodes.EV_KEY, key, action)
 	output_sync()
 	
