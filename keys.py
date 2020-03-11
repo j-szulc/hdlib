@@ -77,7 +77,7 @@ class PKey(Key):
 
 
 	def __repr__(self):
-		return "P"+self.name+":"+str(self.code)	
+		return "P:"+self.name+":"+str(self.code)	
 
 class VKey(Key):
 	
@@ -89,7 +89,7 @@ class VKey(Key):
 		self.keyset = frozenset(keyset)
 
 	def __repr__(self):
-		return "V"+self.name+":"+sum_([repr(k) for k in self.keyset],start="")
+		return "V:"+self.name+":"+sum_([repr(k) for k in self.keyset],start="")
 
 
 #
