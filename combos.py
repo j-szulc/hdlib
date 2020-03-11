@@ -35,4 +35,8 @@ class Combo:
 
 class PCombo(Combo):
 	
-	pass
+	def trigger(self, action):		
+		for m in self.modifiers:
+			m.trigger(action)
+		self.key.trigger(action)
+		

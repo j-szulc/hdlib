@@ -1,4 +1,6 @@
 from helpers import sum_
+from output import trigger
+from events import Action
 
 #
 # ALL KEYS
@@ -31,6 +33,9 @@ class PKey(Key):
 		name, code = tuple_
 		self.name = name
 		self.code = code
+	
+	def trigger(self, action):
+		trigger(self.code, int(action))
 
 pkeytuples = [
 	("a", 30),

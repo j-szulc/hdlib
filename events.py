@@ -1,10 +1,11 @@
-from enum import Enum
+from enum import IntEnum
+from output import trigger
 
-class Action(Enum):
+class Action(IntEnum):
 	
-	PRESSED = 0
-	RELEASED = 1
-	HELD = 2
+	RELEASE = 0
+	PRESS = 1
+	REPEAT = 2
 
 class Event:
 
@@ -15,3 +16,5 @@ class Event:
 		self.combo = combo
 		self.action = action
 
+	def trigger(self):
+		pass
