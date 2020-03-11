@@ -5,6 +5,7 @@ from enum import IntEnum
 from output import *
 from keys import *
 from combos import *
+from helpers import *
 
 class Action(IntEnum):
 	
@@ -12,39 +13,71 @@ class Action(IntEnum):
 	PRESS = 1
 	REPEAT = 2
 
+	@staticmethod
+	def fromSth(sth):
+		if isinstance(sth,int):
+			return Action(sth)
+		elif isinstance(sth,str):
+			return Action(sth.upper())
+		else:
+			raise InvalidSth(sth)
+		
+
 # Event occuring when pressing key regardless of modifiers
-class PKeyEvent:
+class KeyEvent:
 
 	key = None
 	action = None
-	
+
+	def __init__(self, key, action):
+		self.key = Key.fromSth(key)
+		self.action = Action.fromSth(action)
+
+	def expand(self):
+		if isinstance(key,PKey):
+			return [self]
+		else:
+			return sum_([KeyEvent(k,action).expand() for k in self.key.expand()],start=[])
+
 	# pass the event back to the system if there's nothing to capture it
 	# i.e. trigger it back to the system	
 	passthrough = True
 
-	def __init__(self, key, action):
-		self.key = key
-		self.action = action
-
 	def trigger(self):
 		self.key.trigger(self.action)
 
+# The same as KeyEvent but only allows physical keys
+class PKeyEvent(KeyEvent):
+	pass
+
 # Event occuring when pressing exact pcombo
-class PComboEvent:
+class ComboEvent:
 
 	combo = None
 	action = None
+
+	def __init__(self, combo, action):
+		self.combo = combo
+		self.action = action
 	
+	def expand(self):
+		if combo.isP():
+			return [self]
+		else:
+			return sum_([ComboEvent[c,action].expand() for c in combo.expand()], start = [])
 	# do not trigger it back to the system 
 	# any key pressed will invoke both PKeyEvent, PComboEvent
 	# and PKeyEvent will trigger it back
 	# setting it to true will double every character typed
 	passthrough = False
 
-	def __init__(self, combo, action):
-		self.combo = combo
-		self.action = action
-
 	def trigger(self):
 		self.combo.trigger(self.action)
+
+# The same as ComboEvent but only allows physical keys
+class PComboEvent(KeyEvent):
+
+	pass
+
+	
 

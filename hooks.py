@@ -40,16 +40,18 @@ class Map:
 
 	def captureEvent(self,event):
 		def decorator(func):
-			self.d[event].capture(func)
+			for pevent in event.expand():
+				self.d[pevent].capture(func)
 		return decorator
 
 	def listenEvent(self,event):
 		def decorator(func):
-			self.d[event].capture(func)
+			for pevent in event.expand():
+				self.d[pevent].capture(func)
 		return decorator
 	
-	def execute(self, event):
-		self.d[event].execute(event)
+	def execute(self, pevent):
+		self.d[pevent].execute(pevent)
 
 MAP = Map()
 

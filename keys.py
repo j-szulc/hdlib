@@ -18,20 +18,44 @@ class Key:
 	def expand(self):
 	
 		
-		if(type(self) == PKey):
+		if isinstance(PKey):
 			return [self]
-		elif(type(self) == VKey):
+		elif isinstance(VKey):
 			return sum_([subkey.expand() for subkey in self.keyset], start=[])
 		else:
 			raise InvalidKeyType(type(self))
 
 	@staticmethod
 	def fromStr(str_):
-		global nameToKey
-		if str_ in nameToKey:
-			nameToKey[str_]
+		if "nameToKey" in globals():
+			#global nameToKey
+			dict_ = nameToKey
+		else:
+			dict_ = nameToPKey
+
+		if str_ in dict_:
+			return dict_[str_]
 		else:
 			raise InvalidKeyStr(str_)
+
+	@staticmethod
+	def fromInt(int_):
+		#global codeToPkey
+		if int_ in codeToPKey:
+			return codeToPKey[int_]
+		else:
+			raise InvalidKeyCode[int_]
+
+	@staticmethod
+	def fromSth(sth):
+		if isinstance(sth,Key):
+			return sth
+		if isinstance(sth,int):
+			return Key.fromInt(sth)
+		elif isinstance(sth,str):
+			return Key.fromStr(sth)
+		else:
+			raise InvalidSth(sth)
 
 #
 # PHYSICAL KEYS
@@ -48,14 +72,6 @@ class PKey(Key):
 
 	def trigger(self, action):
 		trigger(self.code, int(action))
-
-	@staticmethod
-	def fromStr(str_):
-		global nameToPKey
-		if str_ in nameToPKey:
-			nameToPKey[str_]
-		else:
-			raise InvalidKeyStr(str_)
 
 pkeytuples = [
 	("a", 30),
@@ -79,14 +95,6 @@ class VKey(Key):
 		name, keyset = tuple_
 		self.name = name
 		self.keyset = frozenset(keyset)
-
-	@staticmethod
-	def fromStr(str_):
-		global nameToVKey
-		if str_ in nameToVKey:
-			nameToVKey[str_]
-		else:
-			raise InvalidKeyStr(str_)
 
 vkeytuples = [
 	("shift", {PKey.fromStr("lshift"), PKey.fromStr("rshift")})

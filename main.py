@@ -30,12 +30,12 @@ try:
 	
 				print(event.code,event.value)
 
-				action = Action(int(event.value))
-				pkey = codeToPKey[event.code]
-				pcombo = PCombo(pkey, currentModifiers)
+				action = Action.fromSth(event.value)
+				pkey = Key.fromSth(event.code)
+				pcombo = Combo(pkey, currentModifiers)
 				
-				pkeyevent = PKeyEvent(pkey, action)				
-				pcomboevent = PComboEvent(pcombo, action)
+				pkeyevent = KeyEvent(pkey, action)				
+				pcomboevent = ComboEvent(pcombo, action)
 				
 				for e in [pkeyevent, pcomboevent]:
 					print(e.passthrough)

@@ -25,20 +25,31 @@ class Combo:
 		modifiers = [nameToKey[x] for x in splitted[:-1]]
 		return Combo(key, modifiers)
 
+	@staticmethod
+	def fromSth(sth):
+		if isinstance(sth,Combo):
+			return sth
+		elif isinstance(sth,str):
+			return Combo.fromStr(sth)
+		else:
+			raise InvalidSth(sth)
+
 	def expand(self):
-		# e.g. [(nameToKey("lctrl"),nameToKey("lshift")),(nameToKey("lctrl"),nameToKey("rshift")),...]
-		modifiersVariants= product([ m.expand() for m in self.modifiers ])
+		if self.isP():
+			return [self]
+		else:
+			# e.g. [(Key.fromStr("lctrl"),Key.fromStr("lshift")),(Key.fromStr("lctrl"),Key.fromStr("rshift")),...]
+			modifiersVariants= product([ m.expand() for m in self.modifiers ])
 
-		return [Combo(k,m) for k in self.key.expand() for m in modifiersVariants]
-
-#
-# PHYSICAL COMBO
-#
-
-class PCombo(Combo):
+			return sum_([Combo(k,m).expand() for k in self.key.expand() for m in modifiersVariants],start=[])
 	
 	def trigger(self, action):		
 		for m in self.modifiers:
 			m.trigger(action)
 		self.key.trigger(action)
+
+	def isP(self):
+		return isinstance(key,PKey) and all( isinstance(m,Pkey) for m in modifiers )
+	
+	
 		
