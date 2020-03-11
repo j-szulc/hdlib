@@ -18,7 +18,7 @@ class Action(IntEnum):
 		if isinstance(sth,int):
 			return Action(sth)
 		elif isinstance(sth,str):
-			return Action(sth.upper())
+			return Action[sth.upper()]
 		else:
 			raise InvalidSth(sth)
 		
@@ -34,7 +34,7 @@ class KeyEvent:
 		self.action = Action.fromSth(action)
 
 	def expand(self):
-		if isinstance(key,PKey):
+		if isinstance(self.key,PKey):
 			return [self]
 		else:
 			return sum_([KeyEvent(k,action).expand() for k in self.key.expand()],start=[])
@@ -45,6 +45,12 @@ class KeyEvent:
 
 	def trigger(self):
 		self.key.trigger(self.action)
+
+	def __hash__(self):
+		return hash((self.key,self.action))
+
+	def __eq__(self,obj):
+		return isinstance(obj,KeyEvent) and (self.key, self.action) == (obj.key, obj.action)
 
 # The same as KeyEvent but only allows physical keys
 class PKeyEvent(KeyEvent):
@@ -57,8 +63,8 @@ class ComboEvent:
 	action = None
 
 	def __init__(self, combo, action):
-		self.combo = combo
-		self.action = action
+		self.combo = Combo.fromSth(combo)
+		self.action = Action.fromSth(action)
 	
 	def expand(self):
 		if combo.isP():
@@ -73,6 +79,13 @@ class ComboEvent:
 
 	def trigger(self):
 		self.combo.trigger(self.action)
+
+	def __hash__(self):
+		return hash((self.combo,self.action))
+
+	def __eq__(self,obj):
+		return isinstance(obj,ComboEvent) and (self.combo, self.action) == (obj.combo, obj.action)
+
 
 # The same as ComboEvent but only allows physical keys
 class PComboEvent(KeyEvent):

@@ -12,7 +12,13 @@ from combos import *
 from modifiers import *
 from hooks import *
 
+def f(e):
+	print(e)
+	print("Testing")
 
+(MAP.captureEvent(KeyEvent("a","PRESS")))(f)
+
+#exit()
 
 try:
 	device.grab()
@@ -38,7 +44,7 @@ try:
 				pcomboevent = ComboEvent(pcombo, action)
 				
 				for e in [pkeyevent, pcomboevent]:
-					print(e.passthrough)
+					#print(e.passthrough)
 					MAP.execute(e)
 
 finally:
