@@ -16,6 +16,9 @@ def sum_(list_, start=0):
 def product(list_of_lists):
 	return list(itertools_product(*list_of_lists))
 
+def infinity():
+	while True:
+		yield None
 # UNUSED
 #class key_dependent_dict(defaultdict):
 #
