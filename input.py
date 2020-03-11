@@ -22,11 +22,15 @@ def selectDevice():
     choice = input('Select device [0-{}]:'.format(len(device_lines) - 1))
     return devices[int(choice)]
 
-def loop(device = selectDevice(), handlingFun = print, nOfIterations = -1):
+
+def loop(device = None, handlingFun = print, nOfIterations = -1):
 	if nOfIterations == -1:
 		g = infinity()
-	else
+	else:
 		g = range(nOfIterations)
+
+	if device == None:
+		device = selectDevice()
 
 	try:
 		device.grab()
@@ -50,7 +54,7 @@ def loop(device = selectDevice(), handlingFun = print, nOfIterations = -1):
 	finally:
 		device.ungrab()
 
-def loopDaemon(device = selectDevice(), handlingFun = print, nOfIterations = -1):
+def loopDaemon(device = None, handlingFun = print, nOfIterations = -1):
 	#TODO
 	pass
 	
