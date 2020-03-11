@@ -10,7 +10,7 @@ def updateModifiers(event):
 	key = event.pcombo.key
 	action = event.action
 	if(key in allModifiers):
-		if(action = Action.PRESSED):
+		if(action = Action.PRESS):
 			currentModifiers |= frozenset({key})	
-		elif(action = Action.RELEASED):
+		elif(action = Action.RELEASE):
 			currentModifiers -= frozenset({key})
