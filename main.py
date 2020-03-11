@@ -12,11 +12,11 @@ from combos import *
 from modifiers import *
 from hooks import *
 
+@listen("a")
 def f(e):
-	print(len(MAP.dict))
-	print("Testing")
+	print(len(MAP.dict_))
+	#print("Testing")
 
-(MAP.listenEvent(KeyEvent("a","PRESS")))(f)
 
 #exit()
 

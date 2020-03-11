@@ -28,7 +28,7 @@ class KeyEvent:
 	key = None
 	action = None
 
-	def __init__(self, key, action):
+	def __init__(self, key, action = Action.PRESS):
 		self.key = Key.fromSth(key)
 		self.action = Action.fromSth(action)
 
@@ -71,7 +71,7 @@ class ComboEvent:
 	combo = None
 	action = None
 
-	def __init__(self, combo, action):
+	def __init__(self, combo, action = Action.PRESS):
 		self.combo = Combo.fromSth(combo)
 		self.action = Action.fromSth(action)
 	
