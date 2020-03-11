@@ -1,5 +1,7 @@
-from helpers import product
-from keys import nameToKey
+#from helpers import product
+#from keys import nameToKey
+from helpers import *
+from keys import *
 
 #
 # COMBO

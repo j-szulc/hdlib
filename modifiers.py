@@ -1,5 +1,7 @@
-from keys import nameToKey
-from events import Action
+#from keys import nameToKey
+#from events import Action
+from keys import *
+from events import *
 
 allModifersNames = {"lshift","rshift"}
 allModifiers = {nameToKey(name) for name in allModifiersNames}

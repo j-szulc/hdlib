@@ -1,7 +1,10 @@
 from enum import IntEnum
-from output import trigger
-from keys import Key
-from combos import Combo
+#from output import trigger
+#from keys import Key
+#from combos import Combo
+from output import *
+from keys import *
+from combos import *
 
 class Action(IntEnum):
 	

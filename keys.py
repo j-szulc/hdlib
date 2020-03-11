@@ -1,6 +1,9 @@
-from helpers import sum_
-from output import trigger
-from events import Action
+#from helpers import sum_
+#from output import trigger
+#from events import Action
+from helpers import *
+from output import *
+from events import *
 
 #
 # ALL KEYS

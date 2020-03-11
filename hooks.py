@@ -1,4 +1,5 @@
-from helpers import key_dependent_dict
+#from helpers import key_dependent_dict
+from helpers import *
 
 class WhatToDo:
 	
