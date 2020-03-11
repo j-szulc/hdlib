@@ -1,4 +1,4 @@
-
+#!/usr/bin/python3 -i
 
 #from events import Action, PKeyEvent, PComboEvent
 #from keys import codeToPKey
@@ -11,6 +11,7 @@ from keys import *
 from combos import *
 from modifiers import *
 from hooks import *
+from input import *
 
 @listen("a")
 def f(e):

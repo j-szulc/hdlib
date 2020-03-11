@@ -1,4 +1,3 @@
-from enum import IntEnum
 #from output import trigger
 #from keys import Key
 #from combos import Combo
@@ -6,21 +5,8 @@ from output import *
 from keys import *
 from combos import *
 from helpers import *
+from actions import *
 
-class Action(IntEnum):
-	
-	RELEASE = 0
-	PRESS = 1
-	REPEAT = 2
-
-	@staticmethod
-	def fromSth(sth):
-		if isinstance(sth,int):
-			return Action(sth)
-		elif isinstance(sth,str):
-			return Action[sth.upper()]
-		else:
-			raise InvalidSth(sth)
 		
 # Event occuring when pressing key regardless of modifiers
 class KeyEvent:
