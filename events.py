@@ -23,7 +23,7 @@ class PKeyEvent:
 		self.action = action
 
 	def trigger(self):
-		self.pkey.trigger(self.action)
+		self.key.trigger(self.action)
 
 # Event occuring when pressing exact pcombo
 class PComboEvent:
@@ -36,5 +36,5 @@ class PComboEvent:
 		self.action = action
 
 	def trigger(self):
-		self.key.trigger(self.action)
+		self.combo.trigger(self.action)
 
