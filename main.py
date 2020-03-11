@@ -21,6 +21,20 @@ def select_device():
     choice = input('Select device [0-{}]:'.format(len(device_lines) - 1))
     return devices[int(choice)]
 
+
+
 uinput = UInput()
 device = select_device()
-
+try:
+	device.grab()
+except IOError:
+	print("IOError when grabbing device")
+	exit(1)
+try:
+	while True:
+		select([device], [], [])
+		for event in device.read():
+			if event.type == ecodes.EV_KEY:
+				print(event)
+finally:
+	device.ungrab()
