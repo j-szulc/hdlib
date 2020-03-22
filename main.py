@@ -24,19 +24,21 @@ for m in modifierList:
 	(listen(m))(MODIFIERS.update)
 
 
-@listen("a")
-def f(e):
-	print("Hello")
+#@listen("a")
+#def f(e):
+#	print("Hello")
 
 
-def handlingFun(pkey, action):
+def handlingFun(key, action):
+	
+	combo = Combo(key, MODIFIERS.current)
 
-	pcombo = Combo(pkey, MODIFIERS.current)
+	keyevent = KeyEvent(key, action)				
+	comboevent = ComboEvent(combo, action)
 
-	pkeyevent = KeyEvent(pkey, action)				
-	pcomboevent = ComboEvent(pcombo, action)
+	print(repr(keyevent))
 
-	for e in [pkeyevent, pcomboevent]:
+	for e in [keyevent, comboevent]:
 		MAP.execute(e)
 
-loop(handlingFun = handlingFun)
+loop(handlingFun = handlingFun, nOfIterations=100)

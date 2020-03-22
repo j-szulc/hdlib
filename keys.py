@@ -23,14 +23,14 @@ class Key:
 	@staticmethod
 	def fromStr(str_):
 		try:
-			nameToKey[str_]
+			return nameToKey[str_]
 		except KeyError:
 			raise InvalidKeyStr(str_)
 
 	@staticmethod
 	def fromInt(int_):
 		try:
-			codeToKey[int_]
+			return codeToKey[int_]
 		except KeyError:
 			raise InvalidKeyCode(int_)
 
@@ -50,10 +50,10 @@ class Key:
 		send(self.codes[0], int(action))
 
 	def __str__(self):
-		return self.name
+		return str(self.name)
 
 	def __repr__(self):
-		return self.name+":"+str(self.code)	
+		return repr(self.name)+":"+repr(self.codes)	
 	
 
 keytuples = [

@@ -24,7 +24,7 @@ def selectDevice():
 
 
 def loop(device = None, handlingFun = print, nOfIterations = -1):
-	if nOfIterations == -1:
+	if nOfIterations < 0:
 		g = infinity()
 	else:
 		g = range(nOfIterations)
@@ -45,11 +45,13 @@ def loop(device = None, handlingFun = print, nOfIterations = -1):
 			for event in device.read():
 				if event.type == ecodes.EV_KEY:
 					
-					if event.code not in codeToKey:
-						continue
+					if event.code in codeToKey:
+						key = Key.fromInt(event.code)
+					else:
+						key = Key((None,(event.code,)))
 
 					action = Action.fromSth(event.value)
-					key = Key.fromSth(event.code)
+
 
 					handlingFun(key, action)
 	finally:
