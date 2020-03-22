@@ -2,6 +2,7 @@
 from ioio.output import *
 from helpers import *
 from structs.errors import *
+from keylist.keylist import keytuples
 
 #
 # CLASS DEFINITIONS
@@ -51,12 +52,6 @@ class Key:
 
 	def __repr__(self):
 		return repr(self.name)+":"+repr(self.codes)	
-	
-
-keytuples = [
-	("a", (30,)),
-	("shift", (42,54))
-]
 
 keys = [ Key(tuple_) for tuple_ in keytuples ]
 nameToKey = { key.name: key for key in keys }

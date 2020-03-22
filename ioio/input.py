@@ -45,7 +45,7 @@ def loop(device = None, handlingFun = print, nOfIterations = -1):
 			select([device], [], [])
 			for event in device.read():
 				if event.type == ecodes.EV_KEY:
-					
+
 					if event.code in codeToKey:
 						key = Key.fromInt(event.code)
 					else:
