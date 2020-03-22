@@ -1,8 +1,13 @@
 from evdev import ecodes, InputDevice, list_devices
 from select import select
-from evdev.uinput import UInput
+from evdev.uinput import UInput, UInputError
 
-uinput = UInput()
+try:
+	uinput = UInput()
+except UInputError:
+	print("Error when opening /dev/uinput")
+	print("Run the script as root")
+	exit(1)
 
 def output_sync():
 	uinput.syn()

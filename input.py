@@ -36,8 +36,9 @@ def loop(device = None, handlingFun = print, nOfIterations = -1):
 		device.grab()
 	except IOError:
 		print("IOError when grabbing device")
-		print("Most probably you need to run with sudo")
+		print("Run the script as root")
 		exit(1)
+
 	try:
 		for i in g:
 			select([device], [], [])
