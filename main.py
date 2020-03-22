@@ -17,16 +17,18 @@ MAP = Map()
 
 listen = MAP.listenCombo
 capture = MAP.captureCombo
+listenKey = MAP.listenKey
+captureKey = MAP.captureKey
 
 modifierList = ["shift"]
 MODIFIERS = ModifierSet(modifierList)
 for m in modifierList:
-	(listen(m))(MODIFIERS.update)
+	listenKey(m,Action.PRESS)(MODIFIERS.update)
+	listenKey(m,Action.RELEASE)(MODIFIERS.update)
 
-
-#@listen("a")
-#def f(e):
-#	print("Hello")
+@MAP.listenCombo("shift-a")
+def f(e):
+	print("Hello")
 
 
 def handlingFun(key, action):
@@ -36,9 +38,11 @@ def handlingFun(key, action):
 	keyevent = KeyEvent(key, action)				
 	comboevent = ComboEvent(combo, action)
 
-	print(repr(keyevent))
-
 	for e in [keyevent, comboevent]:
 		MAP.execute(e)
 
 loop(handlingFun = handlingFun, nOfIterations=100)
+
+for m in modifierList:
+	Key.fromSth(m).send(Action.RELEASE)
+

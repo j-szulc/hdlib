@@ -19,7 +19,7 @@ class Event:
 		return hash((self.keyOrCombo,self.action))
 
 	def __eq__(self,obj):
-		return self is obj
+		return isinstance(obj,type(self)) and (self.keyOrCombo, self.action) == (obj.keyOrCombo, obj.action)
 
 	def __str__(self):
 		return str(self.keyOrCombo) + " " + str(self.action)

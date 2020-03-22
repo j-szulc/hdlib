@@ -9,14 +9,17 @@ class ModifierSet:
 	current = frozenset()
 
 	def __init__(self, allModifiers):
-		tracked = { Key.fromSth(m) for m in allModifiers }
+		self.tracked = { Key.fromSth(m) for m in allModifiers }
 
-	def update(self,event):
-		key = event.key
-		action = event.action
+	def update(self,keyevent):
+		if not isinstance(keyevent,KeyEvent):
+			return
 
-		if(key in tracked):
+		key = keyevent.keyOrCombo
+		action = keyevent.action
+
+		if(key in self.tracked):
 			if(action == Action.PRESS):
-				current |= frozenset({key})	
+				self.current |= frozenset({key})	
 			elif(action == Action.RELEASE):
-				current -= frozenset({key2})
+				self.current -= frozenset({key})
