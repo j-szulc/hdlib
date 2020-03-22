@@ -18,7 +18,7 @@ MAP = Map()
 listen = MAP.listenCombo
 capture = MAP.captureCombo
 
-modifierList = ["lshift","rshift"]
+modifierList = ["shift"]
 MODIFIERS = ModifierSet(modifierList)
 for m in modifierList:
 	(listen(m))(MODIFIERS.update)

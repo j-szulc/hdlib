@@ -1,6 +1,6 @@
 from operator import add
 from itertools import product as itertools_product
-from collections import defaultdict
+from collections import defaultdict, ChainMap
 # Contains useful code snippets
 
 def fold(list_, fun, start):
@@ -19,6 +19,10 @@ def product(list_of_lists):
 def infinity():
 	while True:
 		yield None
+
+def mergeDicts(l):
+    return dict(ChainMap(*reversed(list(l))))
+
 # UNUSED
 #class key_dependent_dict(defaultdict):
 #

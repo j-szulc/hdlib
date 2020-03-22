@@ -13,16 +13,17 @@ class Combo:
 	modifiers = frozenset()
 	
 	def __init__(self, key, modifiers):
-		self.key = key
-		self.modifiers = frozenset(modifiers)	
+		self.key = Key.fromSth(key)
+		self.modifiers = frozenset([Key.fromSth(m) for m in modifiers])	
 	
 	# e.g. Combo.fromString("ctrl-c")
 	@staticmethod
 	def fromStr(str_):
 		splitted = str_.split("-")
-		global nameToKey
-		key = nameToKey[splitted[-1]]
-		modifiers = [nameToKey[x] for x in splitted[:-1]]
+
+		key = splitted[-1]
+		modifiers = splitted[:-1]
+
 		return Combo(key, modifiers)
 
 	@staticmethod
@@ -34,28 +35,17 @@ class Combo:
 		else:
 			raise InvalidSth(sth)
 
-	def expand(self):
-		if self.isP():
-			return [self]
-		else:
-			# e.g. [(Key.fromStr("lctrl"),Key.fromStr("lshift")),(Key.fromStr("lctrl"),Key.fromStr("rshift")),...]
-			modifiersVariants= product([ m.expand() for m in self.modifiers ])
-
-			return sum_([Combo(k,m).expand() for k in self.key.expand() for m in modifiersVariants],start=[])
 	
 	def send(self, action):		
 		for m in self.modifiers:
 			m.send(action)
 		self.key.send(action)
-
-	def isPhysical(self):
-		return self.key.isPhysical() and all( m.isPhysical() for m in self.modifiers )
 	
 	def __repr__(self):
-		return str(self)
+		return sum_([repr(m)+"-" for m in self.modifiers], start="") + repr(self.key)
 
 	def __str__(self):
-		return sum_([repr(m)+"-" for m in self.modifiers], start="") + repr(self.key)
+		return sum_([str(m)+"-" for m in self.modifiers], start="") + str(self.key)
 
 	def __hash__(self):
 		return hash((self.key,self.modifiers))

@@ -7,94 +7,46 @@ from combos import *
 from helpers import *
 from actions import *
 
-		
-# Event occuring when pressing key regardless of modifiers
-class KeyEvent:
+class Event:
 
-	key = None
+	keyOrCombo = None
 	action = None
+
+	def send(self):
+		self.keyOrCombo.send(self.action)
+
+	def __hash__(self):
+		return hash((self.keyOrCombo,self.action))
+
+	def __eq__(self,obj):
+		return self is obj
+
+	def __str__(self):
+		return str(self.keyOrCombo) + " " + str(self.action)
+
+	def __repr__(self):
+		return repr(self.keyOrCombo) + " " + repr(self.action)
+
+# Event occuring when pressing a key regardless of modifiers
+class KeyEvent(Event):
 
 	def __init__(self, key, action = Action.PRESS):
-		self.key = Key.fromSth(key)
+		self.keyOrCombo = Key.fromSth(key)
 		self.action = Action.fromSth(action)
 
-	def expand(self):
-		if self.isPhysical():
-			return [self]
-		else:
-			return sum_([KeyEvent(k,action).expand() for k in self.key.expand()],start=[])
+	# do not stop the event from reaching the system
+	# i.e. send it back after proccessing
+	suppress = False
 
-	# pass the event back to the system if there's nothing to capture it
-	# i.e. trigger it back to the system	
-	passthrough = True
-
-	def send(self):
-		self.key.send(self.action)
-
-	def __hash__(self):
-		return hash((self.key,self.action))
-
-	def __eq__(self,obj):
-		return isinstance(obj,KeyEvent) and (self.key, self.action) == (obj.key, obj.action)
-
-	def __str__(self):
-		return str(self.key) + " " + str(self.action)
-
-	def __repr__(self):
-		return str(self)
-
-	# is Physical Key Event
-	def isPhysical(self):
-		return self.key.isPhysical()
-
-# The same as KeyEvent but only allows physical keys
-class PKeyEvent(KeyEvent):
-	pass
-
-# Event occuring when pressing exact pcombo
-class ComboEvent:
-
-	combo = None
-	action = None
+# Event occuring when pressing an exact combo
+class ComboEvent(Event):
 
 	def __init__(self, combo, action = Action.PRESS):
-		self.combo = Combo.fromSth(combo)
+		self.keyOrCombo = Combo.fromSth(combo)
 		self.action = Action.fromSth(action)
 	
-	def expand(self):
-		if self.isPhysical():
-			return [self]
-		else:
-			return sum_([ComboEvent[c,action].expand() for c in self.combo.expand()], start = [])
-	# do not trigger it back to the system 
-	# any key pressed will invoke both PKeyEvent, PComboEvent
-	# and PKeyEvent will trigger it back
-	# setting it to true will double every character typed
-	passthrough = False
+	# stop the event from reaching the system 
+	# i.e. do not send it back after processing
+	suppress = True
 
-	def send(self):
-		self.combo.send(self.action)
-
-	def __hash__(self):
-		return hash((self.combo,self.action))
-
-	def __eq__(self,obj):
-		return isinstance(obj,ComboEvent) and (self.combo, self.action) == (obj.combo, obj.action)
-
-	def __str__(self):
-		return str(self.combo) + " " + str(self.action)
-
-	def __repr__(self):
-		return str(self)
-
-	# is Physical Key Combination Event
-	def isPhysical(self):
-		return self.combo.isPhysical()
-
-# The same as ComboEvent but only allows physical keys
-class PComboEvent(KeyEvent):
-
-	pass
-
-	
 

@@ -9,7 +9,7 @@ class ModifierSet:
 	current = frozenset()
 
 	def __init__(self, allModifiers):
-		tracked = { PKey.fromSth(m) for m in allModifiers }
+		tracked = { Key.fromSth(m) for m in allModifiers }
 
 	def update(self,event):
 		key = event.key

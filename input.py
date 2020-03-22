@@ -45,13 +45,13 @@ def loop(device = None, handlingFun = print, nOfIterations = -1):
 			for event in device.read():
 				if event.type == ecodes.EV_KEY:
 					
-					if event.code not in codeToPKey:
+					if event.code not in codeToKey:
 						continue
 
 					action = Action.fromSth(event.value)
-					pkey = Key.fromSth(event.code)
+					key = Key.fromSth(event.code)
 
-					handlingFun(pkey, action)
+					handlingFun(key, action)
 	finally:
 		device.ungrab()
 
