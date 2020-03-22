@@ -1,11 +1,8 @@
-#from output import trigger
-#from keys import Key
-#from combos import Combo
-from output import *
-from keys import *
-from combos import *
+
+from structs.keys import *
+from structs.combos import *
+from structs.actions import *
 from helpers import *
-from actions import *
 
 class Event:
 

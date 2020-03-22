@@ -1,17 +1,12 @@
 #!/usr/bin/python3 -i
 
-#from events import Action, PKeyEvent, PComboEvent
-#from keys import codeToPKey
-#from combos import PCombo
-#from modifiers import currentModifiers, updateModifiers
-#from hooks import MAP
-from output import *
-from events import *
-from keys import * 
-from combos import *
-from modifiers import *
+from ioio.input import *
+from structs.keys import *
+from structs.combos import *
+from structs.events import *
+from structs.modifiers import *
+from structs.actions import *
 from hooks import *
-from input import *
 
 MAP = Map()
 
@@ -26,7 +21,7 @@ for m in modifierList:
 	listenKey(m,Action.PRESS)(MODIFIERS.update)
 	listenKey(m,Action.RELEASE)(MODIFIERS.update)
 
-@MAP.listenCombo("shift-a")
+@listen("shift-a")
 def f(e):
 	print("Hello")
 

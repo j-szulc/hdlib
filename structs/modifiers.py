@@ -1,7 +1,5 @@
-#from keys import nameToKey
-#from events import Action
-from keys import *
-from events import *
+from structs.keys import *
+from structs.events import *
 
 class ModifierSet:
 
