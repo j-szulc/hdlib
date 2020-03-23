@@ -1,5 +1,5 @@
-from structs.keys import *
-from structs.events import *
+from .keys import *
+from .events import *
 
 class ModifierSet:
 

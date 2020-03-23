@@ -1,8 +1,8 @@
 
-from ioio.output import *
-from helpers import *
-from structs.errors import *
-from keylist.keylist import keytuples
+from ..ioio.output import *
+from ..helpers import *
+from .errors import *
+from ..keylist.keylist import keytuples
 
 #
 # CLASS DEFINITIONS

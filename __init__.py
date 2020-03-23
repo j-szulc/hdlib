@@ -1,12 +1,12 @@
 #!/usr/bin/python3 
 # usage: ./main.py examples/config.py examples/config2.py ...
-from ioio.input import *
-from structs.keys import *
-from structs.combos import *
-from structs.events import *
-from structs.modifiers import *
-from structs.actions import *
-from hooks import *
+from .ioio.input import *
+from .structs.keys import *
+from .structs.combos import *
+from .structs.events import *
+from .structs.modifiers import *
+from .structs.actions import *
+from .hooks import *
 
 import threading
 

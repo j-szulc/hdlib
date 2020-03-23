@@ -1,6 +1,6 @@
 
-from structs.events import *
-from structs.keys import *
+from .structs.events import *
+from .structs.keys import *
 from collections import defaultdict
 
 class WhatToDo:

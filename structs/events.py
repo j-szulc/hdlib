@@ -1,8 +1,8 @@
 
-from structs.keys import *
-from structs.combos import *
-from structs.actions import *
-from helpers import *
+from .keys import *
+from .combos import *
+from .actions import *
+from ..helpers import *
 
 class Event:
 

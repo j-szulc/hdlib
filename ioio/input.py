@@ -1,8 +1,8 @@
 from evdev import ecodes, InputDevice, list_devices
 from select import select
-from helpers import *
-from structs.keys import *
-from structs.actions import *
+from ..helpers import *
+from ..structs.keys import *
+from ..structs.actions import *
 
 def selectDevice():
     """Select a device from the list of accessible input devices."""
