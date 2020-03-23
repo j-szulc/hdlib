@@ -251,7 +251,7 @@ keytuples = [
 	('alt', (56, 100)),
 	('leftbrace', (26,)),
 	('ctrl', (29, 97)),
-	('leftmeta', (125,)),
+	('mod', (125,)),
 	('shift', (42, 54)),
 	('left_down', (617,)),
 	('left_up', (616,)),
