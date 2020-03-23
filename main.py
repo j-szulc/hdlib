@@ -1,5 +1,5 @@
-#!/usr/bin/python3 -i
-
+#!/usr/bin/python3 
+# usage: ./main.py examples/config.py examples/config2.py ...
 from ioio.input import *
 from structs.keys import *
 from structs.combos import *
@@ -45,7 +45,7 @@ if(__name__ == "__main__"):
 	listenKey = MAP.listenKey
 	captureKey = MAP.captureKey
 
-	modifierList = ["shift"]
+	modifierList = ["shift","ctrl","alt","mod"]
 	MODIFIERS = ModifierSet(modifierList)
 	for m in modifierList:
 		listenKey(m,Action.PRESS)(MODIFIERS.update)
