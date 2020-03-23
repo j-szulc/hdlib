@@ -48,6 +48,7 @@ class Map:
 	def listenEvent(self,event,suppress = False):
 		def decorator(func):
 			self.dict_[event].listen(func, suppress)
+			return func
 		return decorator
 
 	# Listen to a key (regardless of modifiers)
