@@ -3,6 +3,7 @@ from select import select
 from ..helpers import *
 from ..structs.keys import *
 from ..structs.actions import *
+import asyncio
 
 def selectDevice():
     """Select a device from the list of accessible input devices."""
@@ -41,6 +42,7 @@ def loop(device = None, handlingFun = print, nOfIterations = -1):
 		exit(1)
 
 	try:
+		asyncio.set_event_loop(asyncio.new_event_loop())
 		for i in g:
 
 			select([device], [], [])

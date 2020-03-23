@@ -1,5 +1,5 @@
 
-from ..ioio.output import *
+from ..io.output import *
 from ..helpers import *
 from .errors import *
 from ..keylist.keylist import keytuples

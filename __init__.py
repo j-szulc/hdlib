@@ -1,6 +1,6 @@
 #!/usr/bin/python3 
 # usage: ./main.py examples/config.py examples/config2.py ...
-from .ioio.input import *
+from .io.input import *
 from .structs.keys import *
 from .structs.combos import *
 from .structs.events import *
@@ -9,6 +9,7 @@ from .structs.actions import *
 from .hooks import *
 
 import threading
+from evdev import InputDevice
 
 MAP = Map()
 
@@ -36,19 +37,13 @@ def handlingFun(key, action):
 def run(device = None):
 	if device == None:
 		device = selectDevice()
+	elif isinstance(device,str):
+		device = InputDevice(device)
 
-	try:
-		thread = threading.Thread(target=loop, kwargs = {'handlingFun': handlingFun, 'device': device})
-		thread.start()
-	except KeyboardInterrupt:
-		pass
+	thread = threading.Thread(target=loop, kwargs = {'handlingFun': handlingFun, 'device': device, 'nOfIterations': 50})
+	thread.start()
 
 	for k in keys:
 		k.send(Action.RELEASE)
 
 	return thread
-
-# DEBUG
-@listenKey("q")
-def quit(event):
-	exit(1)

@@ -9,10 +9,10 @@ except UInputError:
 	print("Run the script as root")
 	exit(1)
 
-def output_sync():
+def output_sync(uinput):
 	uinput.syn()
 
 def send(key, action):
 	uinput.write(ecodes.EV_KEY, key, action)
-	output_sync()
+	output_sync(uinput)
 	
