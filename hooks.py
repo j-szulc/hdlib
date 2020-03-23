@@ -8,7 +8,7 @@ class WhatToDo:
 	listeners = None
 
 	# Do not send back the event
-	# Setting it to true overwrites event.passthrough
+	# Setting it to true overwrites event.suppress
 	suppress = False
 
 	def __init__(self, listeners):
