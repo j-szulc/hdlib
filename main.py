@@ -9,7 +9,8 @@ from structs.actions import *
 from hooks import *
 
 import os, pwd, grp
-
+import sys
+from time import sleep
 def drop_privileges(uid_name='nobody', gid_name='nobody'):
     if os.getuid() != 0:
         # We're not root so, like, whatever dude
@@ -30,6 +31,12 @@ def drop_privileges(uid_name='nobody', gid_name='nobody'):
     old_umask = os.umask(77)
 
 if(__name__ == "__main__"):
+	
+	def execConfigs(configs):
+		for config in configs:
+			with open(config,"r") as f:
+				exec(f.read())
+
 
 	MAP = Map()
 
@@ -44,9 +51,17 @@ if(__name__ == "__main__"):
 		listenKey(m,Action.PRESS)(MODIFIERS.update)
 		listenKey(m,Action.RELEASE)(MODIFIERS.update)
 
+	runConfigs = False
+	configs = sys.argv[1:]
+
 	def handlingFun(key, action):
 
 		drop_privileges()
+
+		global runConfigs
+		if not runConfigs:
+			execConfigs(configs)
+			runConfigs=True
 
 		combo = Combo(key, MODIFIERS.current)
 

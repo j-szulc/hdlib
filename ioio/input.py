@@ -9,7 +9,7 @@ def selectDevice():
 
     devices = [InputDevice(device_fn) for device_fn in reversed(list_devices())]
     if not devices:
-        print('error: no input devices found (do you have rw permission on /dev/input/*?)')
+        print('eerror: no input devices found (do you have rw permission on /dev/input/*?)')
         exit(1)
 
     device_format = '{0:<3} {1.fn:<20} {1.name:<35} {1.phys}'
@@ -42,6 +42,7 @@ def loop(device = None, handlingFun = print, nOfIterations = -1):
 
 	try:
 		for i in g:
+
 			select([device], [], [])
 			for event in device.read():
 				if event.type == ecodes.EV_KEY:
@@ -52,7 +53,6 @@ def loop(device = None, handlingFun = print, nOfIterations = -1):
 						key = Key((None,(event.code,)))
 
 					action = Action.fromSth(event.value)
-
 
 					handlingFun(key, action)
 	finally:
