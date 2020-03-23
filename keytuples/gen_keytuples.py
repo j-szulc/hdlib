@@ -26,7 +26,7 @@ for k in dir(ecodes):
 
 keytuples = [ (n, tuple(c)) for n,c in nameToCode.items()]
 
-with open("./keylist.py","w") as f:
+with open("./keytuples.py","w") as f:
 	f.write("keytuples = [\n")
 	for keytuple in keytuples:
 		f.write("\t"+str(keytuple)+",\n")

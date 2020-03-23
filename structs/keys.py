@@ -2,7 +2,7 @@
 from ..io.output import *
 from ..helpers import *
 from .errors import *
-from ..keylist.keylist import keytuples
+from ..keytuples.keytuples import keytuples
 
 #
 # CLASS DEFINITIONS
