@@ -71,8 +71,14 @@ if(__name__ == "__main__"):
 		for e in [keyevent, comboevent]:
 			MAP.execute(e)
 
-	loop(handlingFun = handlingFun, nOfIterations=100)
+	for k in keys:
+		k.send(Action.RELEASE)
+	
+	try:
+		loop(handlingFun = handlingFun, nOfIterations=100)
+	except KeyboardInterrupt:
+		pass
 
-	for m in modifierList:
-		Key.fromSth(m).send(Action.RELEASE)
+	for k in keys:
+		k.send(Action.RELEASE)
 

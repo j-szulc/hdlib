@@ -1,5 +1,6 @@
-#from events import PKeyEvent, PComboEvent
+
 from structs.events import *
+from structs.keys import *
 from collections import defaultdict
 
 class WhatToDo:
@@ -10,8 +11,8 @@ class WhatToDo:
 	# Setting it to true overwrites event.passthrough
 	suppress = False
 
-	def __init__(self):
-		self.listeners = []
+	def __init__(self, listeners):
+		self.listeners = listeners
 
 	#Function to execute after all the listeners have finished
 	def fallback(self, event):
@@ -42,7 +43,7 @@ class WhatToDo:
 # Maps events to WhatToDo with them
 class Map:
 
-	dict_ = defaultdict(lambda: WhatToDo())
+	dict_ = defaultdict(lambda: WhatToDo([]))
 
 	def listenEvent(self,event,suppress = False):
 		def decorator(func):
@@ -66,6 +67,17 @@ class Map:
 	# (Do not pass it to the system)
 	def captureCombo(self,combo,action = Action.PRESS):
 		return self.listenCombo(combo,action,suppress=True)
+
+	# Listen to all the keys
+	def listenEveryKey(self,action = Action.PRESS, suppress = False):
+		def decorator(func):
+			for key in keys:
+				self.listenKey(key,action,suppress)(func)
+		return decorator
+	
+	# Capture all the keys
+	def captureEveryKey(self,action = Action.PRESS):
+		return self.listenEveryKey(action, True)
 
 	# The WhatToDo class does not store the event it's being run upon
 	# It is passed to each listener

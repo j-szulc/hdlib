@@ -23,7 +23,6 @@ def infinity():
 def mergeDicts(l):
     return dict(ChainMap(*reversed(list(l))))
 
-# UNUSED
 #class key_dependent_dict(defaultdict):
 #
 #	def __init__(self,f_of_x):
