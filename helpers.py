@@ -1,7 +1,10 @@
+# Contains useful code snippets
+
 from operator import add
 from itertools import product as itertools_product
 from collections import defaultdict, ChainMap
-# Contains useful code snippets
+import os, pwd, grp
+
 
 def fold(list_, fun, start):
 	for x in list_:
@@ -32,3 +35,22 @@ def mergeDicts(l):
 #		ret = self.f_of_x(key) # calculate default value
 #		self[key] = ret # and install it in the dict
 #		return ret
+
+def drop_privileges(uid_name='nobody', gid_name='nobody'):
+    if os.getuid() != 0:
+        # We're not root so, like, whatever dude
+        return
+
+    # Get the uid/gid from the name
+    running_uid = pwd.getpwnam(uid_name).pw_uid
+    running_gid = grp.getgrnam(gid_name).gr_gid
+
+    # Remove group privileges
+    os.setgroups([])
+
+    # Try setting the new uid/gid
+    os.setgid(running_gid)
+    os.setuid(running_uid)
+
+    # Ensure a very conservative umask
+    old_umask = os.umask(77)

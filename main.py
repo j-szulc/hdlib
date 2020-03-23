@@ -8,77 +8,47 @@ from structs.modifiers import *
 from structs.actions import *
 from hooks import *
 
-import os, pwd, grp
-import sys
-from time import sleep
-def drop_privileges(uid_name='nobody', gid_name='nobody'):
-    if os.getuid() != 0:
-        # We're not root so, like, whatever dude
-        return
+import threading
 
-    # Get the uid/gid from the name
-    running_uid = pwd.getpwnam(uid_name).pw_uid
-    running_gid = grp.getgrnam(gid_name).gr_gid
+MAP = Map()
 
-    # Remove group privileges
-    os.setgroups([])
+listen = MAP.listenCombo
+capture = MAP.captureCombo
+listenKey = MAP.listenKey
+captureKey = MAP.captureKey
 
-    # Try setting the new uid/gid
-    os.setgid(running_gid)
-    os.setuid(running_uid)
+modifierList = ["shift","ctrl","alt","mod"]
+MODIFIERS = ModifierSet(modifierList)
+for m in modifierList:
+	listenKey(m,Action.PRESS)(MODIFIERS.update)
+	listenKey(m,Action.RELEASE)(MODIFIERS.update)
 
-    # Ensure a very conservative umask
-    old_umask = os.umask(77)
+def handlingFun(key, action):
 
-if(__name__ == "__main__"):
-	
-	def execConfigs(configs):
-		for config in configs:
-			with open(config,"r") as f:
-				exec(f.read())
+	combo = Combo(key, MODIFIERS.current)
 
+	keyevent = KeyEvent(key, action)				
+	comboevent = ComboEvent(combo, action)
 
-	MAP = Map()
+	for e in [keyevent, comboevent]:
+		MAP.execute(e)
 
-	listen = MAP.listenCombo
-	capture = MAP.captureCombo
-	listenKey = MAP.listenKey
-	captureKey = MAP.captureKey
+def run(device = None):
+	if device == None:
+		device = selectDevice()
 
-	modifierList = ["shift","ctrl","alt","mod"]
-	MODIFIERS = ModifierSet(modifierList)
-	for m in modifierList:
-		listenKey(m,Action.PRESS)(MODIFIERS.update)
-		listenKey(m,Action.RELEASE)(MODIFIERS.update)
-
-	runConfigs = False
-	configs = sys.argv[1:]
-
-	def handlingFun(key, action):
-
-		drop_privileges()
-
-		global runConfigs
-		if not runConfigs:
-			execConfigs(configs)
-			runConfigs=True
-
-		combo = Combo(key, MODIFIERS.current)
-
-		keyevent = KeyEvent(key, action)				
-		comboevent = ComboEvent(combo, action)
-
-		for e in [keyevent, comboevent]:
-			MAP.execute(e)
-
-	for k in keys:
-		k.send(Action.RELEASE)
-	
 	try:
-		loop(handlingFun = handlingFun, nOfIterations=100)
+		thread = threading.Thread(target=loop, kwargs = {'handlingFun': handlingFun, 'device': device})
+		thread.start()
 	except KeyboardInterrupt:
 		pass
 
 	for k in keys:
 		k.send(Action.RELEASE)
 
+	return thread
+
+# DEBUG
+@listenKey("q")
+def quit(event):
+	exit(1)

@@ -57,8 +57,4 @@ def loop(device = None, handlingFun = print, nOfIterations = -1):
 					handlingFun(key, action)
 	finally:
 		device.ungrab()
-
-def loopDaemon(device = None, handlingFun = print, nOfIterations = -1):
-	#TODO
-	pass
 	
