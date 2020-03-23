@@ -2,17 +2,22 @@ from evdev import ecodes, InputDevice, list_devices
 from select import select
 from evdev.uinput import UInput, UInputError
 
-try:
-	uinput = UInput()
-except UInputError:
-	print("Error when opening /dev/uinput")
-	print("Run the script as root")
-	exit(1)
+class Output:
 
-def output_sync(uinput):
-	uinput.syn()
+	def __init__(self):
+		try:
+			self.uinput = UInput()
+		except UInputError:
+			print("Error when opening /dev/uinput")
+			print("Run the script as root")
+			exit(1)
 
-def send(key, action):
-	uinput.write(ecodes.EV_KEY, key, action)
-	output_sync(uinput)
-	
+	def sync(self):
+		self.uinput.syn()
+
+	def send(self,key, action):
+		self.uinput.write(ecodes.EV_KEY, key.codes[0], int(action))
+		self.sync()
+
+	def __del__(self):
+		self.uinput.close()

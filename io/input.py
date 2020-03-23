@@ -1,8 +1,5 @@
 from evdev import ecodes, InputDevice, list_devices
 from select import select
-from ..helpers import *
-from ..structs.keys import *
-from ..structs.actions import *
 import asyncio
 
 def selectDevice():
@@ -25,38 +22,20 @@ def selectDevice():
     return devices[int(choice)]
 
 
-def loop(device = None, handlingFun = print, nOfIterations = -1):
-	if nOfIterations < 0:
-		g = infinity()
-	else:
-		g = range(nOfIterations)
-
-	if device == None:
-		device = selectDevice()
-
+def loop(device, handlingFun = print):
 	try:
 		device.grab()
 	except IOError:
 		print("IOError when grabbing device")
 		print("Run the script as root")
 		exit(1)
-
 	try:
 		asyncio.set_event_loop(asyncio.new_event_loop())
-		for i in g:
-
+		for i in range(1000):
 			select([device], [], [])
 			for event in device.read():
 				if event.type == ecodes.EV_KEY:
-
-					if event.code in codeToKey:
-						key = Key.fromInt(event.code)
-					else:
-						key = Key((None,(event.code,)))
-
-					action = Action.fromSth(event.value)
-
-					handlingFun(key, action)
+					handlingFun(event.code, event.value)
 	finally:
 		device.ungrab()
 	

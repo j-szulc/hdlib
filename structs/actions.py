@@ -1,4 +1,5 @@
 from enum import IntEnum
+
 class Action(IntEnum):
 	
 	RELEASE = 0

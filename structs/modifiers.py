@@ -1,4 +1,3 @@
-from .keys import *
 from .events import *
 
 class ModifierSet:
@@ -7,7 +6,7 @@ class ModifierSet:
 	current = frozenset()
 
 	def __init__(self, allModifiers):
-		self.tracked = { Key.fromSth(m) for m in allModifiers }
+		self.tracked = allModifiers
 
 	def update(self,keyevent):
 		if not isinstance(keyevent,KeyEvent):

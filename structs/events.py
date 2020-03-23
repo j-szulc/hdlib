@@ -1,16 +1,11 @@
 
-from .keys import *
-from .combos import *
 from .actions import *
-from ..helpers import *
+
 
 class Event:
 
 	keyOrCombo = None
 	action = None
-
-	def send(self):
-		self.keyOrCombo.send(self.action)
 
 	def __hash__(self):
 		return hash((self.keyOrCombo,self.action))
@@ -28,8 +23,11 @@ class Event:
 class KeyEvent(Event):
 
 	def __init__(self, key, action = Action.PRESS):
-		self.keyOrCombo = Key.fromSth(key)
-		self.action = Action.fromSth(action)
+		self.keyOrCombo = key
+		self.action = action
+
+	def key(self):
+		return self.keyOrCombo
 
 	# do not stop the event from reaching the system
 	# i.e. send it back after proccessing
@@ -39,8 +37,11 @@ class KeyEvent(Event):
 class ComboEvent(Event):
 
 	def __init__(self, combo, action = Action.PRESS):
-		self.keyOrCombo = Combo.fromSth(combo)
-		self.action = Action.fromSth(action)
+		self.keyOrCombo = combo
+		self.action = action
+
+	def combo(self):
+		return self.keyOrCombo
 	
 	# stop the event from reaching the system 
 	# i.e. do not send it back after processing
