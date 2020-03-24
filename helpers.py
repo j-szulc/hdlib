@@ -36,7 +36,7 @@ def mergeDicts(l):
 #		self[key] = ret # and install it in the dict
 #		return ret
 
-def drop_privileges(uid_name='nobody', gid_name='nobody'):
+def dropPrivileges(uid_name='nobody', gid_name='nobody'):
     if os.getuid() != 0:
         # We're not root so, like, whatever dude
         return

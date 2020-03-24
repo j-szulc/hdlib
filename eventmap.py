@@ -1,4 +1,3 @@
-
 from collections import defaultdict
 from .structs.errors import InvalidListener
 
