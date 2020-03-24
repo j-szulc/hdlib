@@ -2,13 +2,15 @@ from .events import *
 
 class ModifierSet:
 
+	# tracked = all modifiers that we track the state of
 	tracked = None
 	current = frozenset()
 
-	def __init__(self, allModifiers):
-		self.tracked = allModifiers
+	def __init__(self, tracked):
+		self.tracked = tracked
 
 	def update(self,keyevent):
+		# Not really neccessary, as update should only be listening to KeyEvents
 		if not isinstance(keyevent,KeyEvent):
 			return
 

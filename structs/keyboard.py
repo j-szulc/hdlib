@@ -1,5 +1,6 @@
 from .errors import *
 from ..helpers import *
+from ..keytuples.keytuples import keytuples
 
 #
 # CLASS DEFINITIONS
@@ -45,7 +46,7 @@ class Combo:
 		
 class Keyboard:
 
-	def __init__(self,keytuples):
+	def __init__(self,keytuples = keytuples):
 		self.keys = [ Key(tuple_) for tuple_ in keytuples ]
 		self.nameToKey = { key.name: key for key in self.keys }
 		self.codeToKey = mergeDicts( {code:key for code in key.codes } for key in self.keys);
@@ -62,6 +63,7 @@ class Keyboard:
 		except KeyError:
 			return Key(None,(int_,))
 
+	# Key from something
 	def keyFrom(self,sth):
 		if isinstance(sth,Key):
 			return sth
@@ -80,6 +82,7 @@ class Keyboard:
 
 		return Combo(self.keyFrom(key), [self.keyFrom(m) for m in modifiers])
 
+	# Combo from something
 	def comboFrom(self,sth):
 		if isinstance(sth,Combo):
 			return sth

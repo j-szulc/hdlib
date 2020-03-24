@@ -19,3 +19,8 @@ class InvalidSth(Exception):
 	def __init__(self,sth):
 		self.sth=sth
 		self.type=type(sth)
+
+class InvalidListener(Exception):
+
+	def __init__(self,listener):
+		self.listenerName = listener.__name__

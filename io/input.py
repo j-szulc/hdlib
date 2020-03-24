@@ -22,7 +22,7 @@ def selectDevice():
     return devices[int(choice)]
 
 
-def loop(device, handlingFun = print):
+def loop(device, handlingFun, stopFlag):
 	try:
 		device.grab()
 	except IOError:
@@ -31,7 +31,7 @@ def loop(device, handlingFun = print):
 		exit(1)
 	try:
 		asyncio.set_event_loop(asyncio.new_event_loop())
-		for i in range(1000):
+		while not stopFlag.isSet():
 			select([device], [], [])
 			for event in device.read():
 				if event.type == ecodes.EV_KEY:

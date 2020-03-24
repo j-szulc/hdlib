@@ -20,4 +20,7 @@ class Output:
 		self.sync()
 
 	def __del__(self):
-		self.uinput.close()
+		try:
+			self.uinput.close()
+		except ImportError:
+			pass

@@ -22,9 +22,9 @@ class Event:
 # Event occuring when pressing a key regardless of modifiers
 class KeyEvent(Event):
 
-	def __init__(self, key, action = Action.PRESS):
+	def __init__(self, key, actionSth = Action.PRESS):
 		self.keyOrCombo = key
-		self.action = action
+		self.action = Action.fromSth(actionSth)
 
 	def key(self):
 		return self.keyOrCombo
@@ -36,9 +36,9 @@ class KeyEvent(Event):
 # Event occuring when pressing an exact combo
 class ComboEvent(Event):
 
-	def __init__(self, combo, action = Action.PRESS):
+	def __init__(self, combo, actionSth = Action.PRESS):
 		self.keyOrCombo = combo
-		self.action = action
+		self.action = Action.fromSth(actionSth)
 
 	def combo(self):
 		return self.keyOrCombo

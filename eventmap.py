@@ -1,5 +1,6 @@
 
 from collections import defaultdict
+from .structs.errors import InvalidListener
 
 class WhatToDo:
 
@@ -20,6 +21,15 @@ class WhatToDo:
 		if not self.suppress:
 			self.listeners.append(func)
 			self.suppress = suppress
+
+	def unlisten(self, func, unsuppress = False):
+		try:
+			self.listeners.remove(func)
+		except ValueError:
+			raise InvalidListener(func)
+		finally:
+			if unsuppress:
+				self.suppress = False
 
 	# The WhatToDo class does not store the event it's being run upon
 	# It is passed to each listener
@@ -44,6 +54,12 @@ class EventMap:
 	def listenEvent(self,event,suppress = False):
 		def decorator(func):
 			self.dict_[event].listen(func, suppress)
+			return func
+		return decorator
+
+	def unlistenEvent(self,event,suppress = False):
+		def decorator(func):
+			self.dict_[event].unlisten(func, suppress)
 			return func
 		return decorator
 

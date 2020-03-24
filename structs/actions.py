@@ -6,6 +6,7 @@ class Action(IntEnum):
 	PRESS = 1
 	REPEAT = 2
 
+	# Action from something
 	@staticmethod
 	def fromSth(sth):
 		if isinstance(sth,int):
