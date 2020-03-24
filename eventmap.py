@@ -3,62 +3,48 @@ from .structs.errors import InvalidListener
 
 class WhatToDo:
 
-	listeners = None
+	def __init__(self):
+		self.listeners = []
 
-	# Do not send back the event
-	# Setting it to true overwrites event.suppress
-	suppress = False
+	def listen(self, func):
+		self.listeners.append(func)
 
-	# Fallback is a function, which is called when the event is not supposed to be suppressed
-	# i.e. we need to send it back through Output class
-	def __init__(self, listeners, fallback):
-		self.listeners = listeners
-		self.fallback = fallback
-
-	def listen(self, func, suppress = False):
-		# Stop adding listeners after supressed flag's been set
-		if not self.suppress:
-			self.listeners.append(func)
-			self.suppress = suppress
-
-	def unlisten(self, func, unsuppress = False):
+	def unlisten(self, func):
 		try:
 			self.listeners.remove(func)
 		except ValueError:
 			raise InvalidListener(func)
-		finally:
-			if unsuppress:
-				self.suppress = False
 
 	# The WhatToDo class does not store the event it's being run upon
 	# It is passed to each listener
 	# So that they know why they've been triggered
 	# (in a case they listen to multiple events)
+	# Returns whether to suppress the event or not
 	def execute(self, event):
 		for l in self.listeners:
-			l(event)
-		try:
-			if (not self.suppress) and (not event.suppress):		
-				self.fallback(event)
-		except AttributeError:
-			pass
+			if l(event) and event.allowSuppress:
+				# If function returns True we capture the event
+				# i.e. we stop doing anything with it
+				# and we do not put it back into system
+				return True
+		return False
 
 # Maps events to WhatToDo with them
 class EventMap:
 
 	
-	def __init__(self, fallback):
-		self.dict_ = defaultdict(lambda: WhatToDo([],fallback))
+	def __init__(self):
+		self.dict_ = defaultdict(lambda: WhatToDo())
 
-	def listenEvent(self,event,suppress = False):
+	def listenEvent(self,event):
 		def decorator(func):
-			self.dict_[event].listen(func, suppress)
+			self.dict_[event].listen(func)
 			return func
 		return decorator
 
-	def unlistenEvent(self,event,suppress = False):
+	def unlistenEvent(self,event):
 		def decorator(func):
-			self.dict_[event].unlisten(func, suppress)
+			self.dict_[event].unlisten(func)
 			return func
 		return decorator
 
@@ -66,7 +52,12 @@ class EventMap:
 	# It is passed to each listener
 	# So that they know why they've been triggered
 	# (in a case they listen to multiple events)
-	def execute(self, event):
-		self.dict_[event].execute(event)
+	# Executes fallback if nobody captured the event
+	def execute(self, fallback, events):
+		for event in events:
+			if self.dict_[event].execute(event):
+				return True
+		fallback()
+		return False
 
 

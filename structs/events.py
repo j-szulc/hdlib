@@ -29,9 +29,8 @@ class KeyEvent(Event):
 	def key(self):
 		return self.keyOrCombo
 
-	# do not stop the event from reaching the system
-	# i.e. send it back after proccessing
-	suppress = False
+	# allow stopping the event from reaching the system
+	allowSuppress = True
 
 # Event occuring when pressing an exact combo
 class ComboEvent(Event):
@@ -43,8 +42,16 @@ class ComboEvent(Event):
 	def combo(self):
 		return self.keyOrCombo
 	
-	# stop the event from reaching the system 
-	# i.e. do not send it back after processing
-	suppress = True
+	# allow stopping the event from reaching the system
+	allowSuppress = True
 
+# Event that carries all the information that KeyEvent does
+# But is recognized as the same event regardless of what key has been pressed
+# Used to listen to every key pressed
+class AnyKeyEvent(KeyEvent):
 
+	def __hash__(self):
+		return hash(self.action)
+
+	def __eq__(self, obj):
+		return isinstance(obj,AnyKeyEvent) and self.action == obj.action

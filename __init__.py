@@ -21,7 +21,7 @@ class Flag:
 hd = HotkeyDaemon()
 stopFlag = Flag()
 
-def run(inputDevice = None):
+def run(inputDevice = None, dropPrivileges = False):
 	if inputDevice == None:
 		inputDevice = selectDevice()
 
@@ -33,17 +33,68 @@ def run(inputDevice = None):
 	hd_thread = threading.Thread(daemon=True,target = hd.run, args = (inputDevice, stopFlag))
 	hd_thread.start()
 	
+	if dropPrivileges:
+		dropPrivileges()
+
 	return hd_thread
 
 def kill():
 	stopFlag.set(True)
 
-listenKey = hd.listenKey
-listenCombo = hd.listenCombo
-captureKey = hd.captureKey
-captureCombo = hd.captureCombo
+def send(comboSth, actionSth = "PRESS", outside = False):
+	combo = hd.keyboard.comboFrom(comboSth)
+	action = Action.fromSth(actionSth)
+	comboEvent = ComboEvent(combo, action)
+
+	hd.sendComboEvent(comboEvent, outside)
+
+def pressOnce(comboSth, outside = False):
+	send(comboSth,"PRESS", outside)
+	send(comboSth,"RELEASE", outside)
+
+# Ugly list of repeatable functions
+
+def listenCombo(comboSth, actionSth = "PRESS"):
+	combo = hd.keyboard.comboFrom(comboSth)
+	action = Action.fromSth(actionSth)
+	comboEvent = ComboEvent(combo, action)
+
+	return hd.eventMap.listenEvent(comboEvent)
+
+def listenKey(keySth, actionSth = "PRESS"):
+	key = hd.keyboard.keyFrom(comboSth)
+	action = Action.fromSth(actionSth)
+	keyEvent = KeyEvent(key, action)
+
+	return hd.eventMap.listenEvent(comboEvent)
+
+def listenAnyKey(actionSth = "PRESS"):
+	action = Action.fromSth(actionSth)
+	anyKeyEvent = AnyKeyEvent(None, action)
+	
+	return hd.eventMap.listenEvent(anyKeyEvent)
+
+def unlistenCombo(comboSth, actionSth = "PRESS"):
+	combo = hd.keyboard.comboFrom(comboSth)
+	action = Action.fromSth(actionSth)
+	comboEvent = ComboEvent(combo, action)
+
+	return hd.eventMap.unlistenEvent(comboEvent)
+
+def unlistenKey(keySth, actionSth = "PRESS"):
+	key = hd.keyboard.keyFrom(comboSth)
+	action = Action.fromSth(actionSth)
+	keyEvent = KeyEvent(key, action)
+
+	return hd.eventMap.unlistenEvent(comboEvent)
+
+def unlistenAnyKey(actionSth = "PRESS"):
+	action = Action.fromSth(actionSth)
+	anyKeyEvent = AnyKeyEvent(None, action)
+	
+	return hd.eventMap.unlistenEvent(anyKeyEvent)
 
 listen = listenCombo
-capture = captureCombo
+unlisten = unlistenCombo
 
-send = hd.sendKey
+
