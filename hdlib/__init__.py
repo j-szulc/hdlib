@@ -19,9 +19,17 @@ class Flag:
 	
 # global variables
 hd = HotkeyDaemon()
+hdThread = None
 stopFlag = Flag()
 
-def run(inputDevice = None, dropPrivileges = False, daemon = True):
+def kill():
+	stopFlag.set(True)
+
+def join():
+	if hdThread != None:
+		hdThread.join()
+
+def run(inputDevice = None, daemon = True):
 	if inputDevice == None:
 		inputDevice = selectDevice()
 
@@ -29,20 +37,18 @@ def run(inputDevice = None, dropPrivileges = False, daemon = True):
 		inputDeviceName = inputDevice
 		inputDevice = InputDevice(inputDeviceName)
 	
-	stopFlag.set(False)
-	hd_thread = threading.Thread(daemon = daemon,target = hd.run, args = (inputDevice, stopFlag))
-	hd_thread.start()
-	
-	if dropPrivileges:
-		dropPrivileges()
+	kill()
+	stopFlag.set(False)	
+
+	global hdThread
+	hdThread = threading.Thread(daemon = daemon,target = hd.run, args = (inputDevice, stopFlag))
+	hdThread.start()
 
 	if not daemon:
-		hd_thread.join()
+		join()
 
-	return hd_thread
+	return hdThread
 
-def kill():
-	stopFlag.set(True)
 
 def send(comboSth, actionSth = "PRESS", outside = False):
 	combo = hd.keyboard.comboFrom(comboSth)

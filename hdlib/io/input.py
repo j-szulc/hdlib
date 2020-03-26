@@ -27,7 +27,7 @@ def loop(device, handlingFun, stopFlag):
 		device.grab()
 	except IOError:
 		print("IOError when grabbing device")
-		print("Run the script as root")
+		print("Ensure you have write permissions")
 		exit(1)
 	try:
 		asyncio.set_event_loop(asyncio.new_event_loop())

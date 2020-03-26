@@ -9,7 +9,7 @@ class Output:
 			self.uinput = UInput()
 		except UInputError:
 			print("Error when opening /dev/uinput")
-			print("Run the script as root")
+			print("Ensure you have write permissions")
 			exit(1)
 
 	def sync(self):

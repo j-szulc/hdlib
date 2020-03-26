@@ -5,20 +5,23 @@ from itertools import product as itertools_product
 from collections import defaultdict, ChainMap
 import os, pwd, grp
 
-
+# Unused
 def fold(list_, fun, start):
 	for x in list_:
 		start = fun(start, x)
 	return start
 
+# Unused
 # e.g. sum(["a","b"],"") == "ab"
 def sum_(list_, start=0):
 	return fold(list_, add, start)
 
+# Unused
 # e.g. product([["a","b"],[1,2]]) == [('a', 1), ('a', 2), ('b', 1), ('b', 2)]
 def product(list_of_lists):
 	return list(itertools_product(*list_of_lists))
 
+# Unused
 def infinity():
 	while True:
 		yield None
@@ -36,10 +39,9 @@ def mergeDicts(l):
 #		self[key] = ret # and install it in the dict
 #		return ret
 
-def dropPrivileges(uid_name='nobody', gid_name='nobody'):
-    if os.getuid() != 0:
-        # We're not root so, like, whatever dude
-        return
+# Note that it doesn't change
+# environmental variables
+def switchUser(uid_name='nobody', gid_name='nobody'):
 
     # Get the uid/gid from the name
     running_uid = pwd.getpwnam(uid_name).pw_uid

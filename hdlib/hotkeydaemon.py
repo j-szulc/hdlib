@@ -68,7 +68,8 @@ class HotkeyDaemon:
 			loop(inputDevice, self.handleEvdevEvent, stopFlag)
 		finally:
 			# Optional
-			#self.sendAll(Action.RELEASE)
+			for key in self.keyboard.keys:
+				self.sendKey(key,Action.RELEASE,True)
 			pass
 
 	
