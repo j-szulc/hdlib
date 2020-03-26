@@ -65,11 +65,11 @@ def listenCombo(comboSth, actionSth = "PRESS"):
 	return hd.eventMap.listenEvent(comboEvent)
 
 def listenKey(keySth, actionSth = "PRESS"):
-	key = hd.keyboard.keyFrom(comboSth)
+	key = hd.keyboard.keyFrom(keySth)
 	action = Action.fromSth(actionSth)
 	keyEvent = KeyEvent(key, action)
 
-	return hd.eventMap.listenEvent(comboEvent)
+	return hd.eventMap.listenEvent(keyEvent)
 
 def listenAnyKey(actionSth = "PRESS"):
 	action = Action.fromSth(actionSth)
@@ -85,11 +85,11 @@ def unlistenCombo(comboSth, actionSth = "PRESS"):
 	return hd.eventMap.unlistenEvent(comboEvent)
 
 def unlistenKey(keySth, actionSth = "PRESS"):
-	key = hd.keyboard.keyFrom(comboSth)
+	key = hd.keyboard.keyFrom(keySth)
 	action = Action.fromSth(actionSth)
 	keyEvent = KeyEvent(key, action)
 
-	return hd.eventMap.unlistenEvent(comboEvent)
+	return hd.eventMap.unlistenEvent(keyEvent)
 
 def unlistenAnyKey(actionSth = "PRESS"):
 	action = Action.fromSth(actionSth)
