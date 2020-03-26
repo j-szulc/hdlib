@@ -21,7 +21,7 @@ class Flag:
 hd = HotkeyDaemon()
 stopFlag = Flag()
 
-def run(inputDevice = None, dropPrivileges = False):
+def run(inputDevice = None, dropPrivileges = False, daemon = True):
 	if inputDevice == None:
 		inputDevice = selectDevice()
 
@@ -30,11 +30,14 @@ def run(inputDevice = None, dropPrivileges = False):
 		inputDevice = InputDevice(inputDeviceName)
 	
 	stopFlag.set(False)
-	hd_thread = threading.Thread(daemon=True,target = hd.run, args = (inputDevice, stopFlag))
+	hd_thread = threading.Thread(daemon = daemon,target = hd.run, args = (inputDevice, stopFlag))
 	hd_thread.start()
 	
 	if dropPrivileges:
 		dropPrivileges()
+
+	if not daemon:
+		hd_thread.join()
 
 	return hd_thread
 
