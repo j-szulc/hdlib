@@ -16,7 +16,8 @@ class Output:
 		self.uinput.syn()
 
 	def send(self,key, action):
-		self.uinput.write(ecodes.EV_KEY, key.codes[0], int(action))
+		# IMPORTANT - choose Right Alt over Left Alt
+		self.uinput.write(ecodes.EV_KEY, key.codes[-1], int(action))
 		self.sync()
 
 	def __del__(self):
